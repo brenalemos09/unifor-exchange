@@ -23,8 +23,7 @@ O projeto está sendo desenvolvido na disciplina de Desenvolvimento de Plataform
 - Editais e oportunidades de intercâmbio;
 - Área administrativa para gerenciamento das informações.
 
-> As funcionalidades poderão ser alteradas após o levantamento de requisitos com o setor responsável da UNIFOR.
-
+> As funcionalidades poderão ser alteradas após o levantamento de requisitos com o setor responsável da UNIFOR. 
 ## 👥 Equipe
 
 - Brena Vitória Aguiar Lemos
