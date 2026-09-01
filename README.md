@@ -1,2 +1,3 @@
-# unifor-exchange
+# UNIFOR Exchange
+
 Plataforma mobile para centralização e personalização de informações sobre intercâmbios acadêmicos da UNIFOR.
