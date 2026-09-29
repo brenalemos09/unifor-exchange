@@ -1,29 +1,34 @@
 # UNIFOR Exchange
 
-Plataforma web desenvolvida com o objetivo de centralizar e facilitar o acesso às informações sobre intercâmbios acadêmicos da Universidade de Fortaleza (UNIFOR).
+Plataforma web de apoio à mobilidade acadêmica internacional da Universidade de Fortaleza (UNIFOR), que centraliza e organiza informações sobre países, universidades conveniadas e oportunidades internacionais em uma experiência interativa e personalizada.
 
 ## 📌 Sobre o projeto
 
-O UNIFOR Exchange busca tornar mais simples e intuitiva a busca por oportunidades de intercâmbio, reunindo em um único ambiente informações sobre países, universidades conveniadas, requisitos e demais aspectos relacionados à mobilidade acadêmica.
+O UNIFOR Exchange reúne, em um único ambiente, informações sobre destinos, universidades parceiras, oportunidades internacionais e requisitos de mobilidade acadêmica, oferecendo recursos como mapa interativo, busca e filtros, e um quiz de perfil que recomenda destinos compatíveis com o estudante.
 
-O projeto está sendo desenvolvido na disciplina de Desenvolvimento de Plataformas Web da Universidade de Fortaleza.
+A plataforma tem caráter **informativo e orientativo** — não substitui os processos oficiais da Diretoria de Relações Internacionais (DRI) da UNIFOR, como inscrições, aprovações ou equivalência de disciplinas.
 
-## 💡 Funcionalidades previstas
+O projeto está sendo desenvolvido na disciplina de Desenvolvimento de Plataformas Web (UNIFOR).
 
-- Consulta de países disponíveis para intercâmbio;
-- Visualização das universidades conveniadas à UNIFOR;
-- Mapa interativo de destinos;
-- Informações detalhadas sobre universidades e países;
-- Busca e filtros;
-- Quiz de perfil para recomendação de destinos;
-- Relatos de alunos que já realizaram intercâmbio;
-- Favoritos;
-- Comparação entre universidades;
-- Informações sobre requisitos, custos, bolsas e documentação;
-- Editais e oportunidades de intercâmbio;
-- Área administrativa para gerenciamento das informações.
+## 💡 Funcionalidades principais
 
-> As funcionalidades poderão ser alteradas após o levantamento de requisitos com o setor responsável da UNIFOR. 
+- Cadastro, login e recuperação de acesso;
+- Mapa interativo de destinos, com universidades por país;
+- Catálogo de universidades, com busca e filtros (país, curso, idioma, modalidade);
+- Quiz de perfil, com recomendação personalizada e índice de compatibilidade;
+- Consulta de oportunidades internacionais (intercâmbio, dupla titulação, programas);
+- Favoritos e área pessoal;
+- Minha Jornada — checklist de preparação para o intercâmbio;
+- Requisitos gerais e verificação orientativa de elegibilidade;
+- Experiências de estudantes;
+- Área administrativa (CRUD de universidades, países e oportunidades).
+
+## 🛠️ Tecnologias
+
+- **Front-end:** React, HTML, JavaScript e Bootstrap
+- **Back-end:** Node.js e Express
+- **Banco de dados:** MySQL
+
 ## 👥 Equipe
 
 - Brena Vitória Aguiar Lemos
@@ -40,4 +45,12 @@ Disciplina: Desenvolvimento de Plataformas Web
 
 ## 🚧 Status
 
-Projeto em fase de levantamento de requisitos e definição do escopo.
+**Etapa 1 — Plano de Trabalho:** concluída (escopo, requisitos funcionais e não funcionais, casos de uso, wireframes, modelagem de dados e arquitetura definidos).
+
+Próxima etapa: **Etapa 2 — MVP**, com implementação inicial do front-end, back-end e CRUD básico.
+
+## 🔗 Links
+
+- **Repositório:** https://github.com/brenalemos09/unifor-exchange
+- **Trello:** https://trello.com/invite/b/6a97079f2a71436af601617a/ATTI88d87562c6b07786dc9cbd3cc9bcfbce1B77E1FD/unifor-exchange
+- **Figma (protótipo):** https://www.figma.com/design/hFSbuZDYrMKZYXx4D9NAeS/UNIFOR-Exchange-%E2%80%94-Prot%C3%B3tipo-Web?node-id=1-6
