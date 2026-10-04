@@ -45,9 +45,23 @@ Disciplina: Desenvolvimento de Plataformas Web
 
 ## 🚧 Status
 
-**Etapa 1 — Plano de Trabalho:** concluída (escopo, requisitos funcionais e não funcionais, casos de uso, wireframes, modelagem de dados e arquitetura definidos).
+**Etapa 1 — Plano de Trabalho:** concluída.
 
-Próxima etapa: **Etapa 2 — MVP**, com implementação inicial do front-end, back-end e CRUD básico.
+Foram definidos o escopo do sistema, requisitos funcionais e não funcionais, casos de uso, fluxo de navegação, wireframes e protótipo no Figma, modelagem de dados, tecnologias e arquitetura.
+
+**Etapa 2 — MVP:** em desenvolvimento.
+
+O MVP desta etapa contempla:
+
+- Home;
+- Catálogo de universidades;
+- Detalhes da universidade;
+- Área administrativa de universidades;
+- CRUD de universidades;
+- Integração entre front-end, API e banco de dados;
+- Responsividade das interfaces.
+
+Nesta etapa, o desenvolvimento utiliza React + Bootstrap no front-end, Node.js + Express no back-end e MySQL para persistência dos dados.
 
 ## 🔗 Links
 
