@@ -1,70 +1,16 @@
-# UNIFOR Exchange
+# React + Vite
 
-Plataforma web de apoio à mobilidade acadêmica internacional da Universidade de Fortaleza (UNIFOR), que centraliza e organiza informações sobre países, universidades conveniadas e oportunidades internacionais em uma experiência interativa e personalizada.
+This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
-## 📌 Sobre o projeto
+Currently, two official plugins are available:
 
-O UNIFOR Exchange reúne, em um único ambiente, informações sobre destinos, universidades parceiras, oportunidades internacionais e requisitos de mobilidade acadêmica, oferecendo recursos como mapa interativo, busca e filtros, e um quiz de perfil que recomenda destinos compatíveis com o estudante.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-A plataforma tem caráter **informativo e orientativo** — não substitui os processos oficiais da Diretoria de Relações Internacionais (DRI) da UNIFOR, como inscrições, aprovações ou equivalência de disciplinas.
+## React Compiler
 
-O projeto está sendo desenvolvido na disciplina de Desenvolvimento de Plataformas Web (UNIFOR).
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## 💡 Funcionalidades principais
+## Expanding the Oxlint configuration
 
-- Cadastro, login e recuperação de acesso;
-- Mapa interativo de destinos, com universidades por país;
-- Catálogo de universidades, com busca e filtros (país, curso, idioma, modalidade);
-- Quiz de perfil, com recomendação personalizada e índice de compatibilidade;
-- Consulta de oportunidades internacionais (intercâmbio, dupla titulação, programas);
-- Favoritos e área pessoal;
-- Minha Jornada — checklist de preparação para o intercâmbio;
-- Requisitos gerais e verificação orientativa de elegibilidade;
-- Experiências de estudantes;
-- Área administrativa (CRUD de universidades, países e oportunidades).
-
-## 🛠️ Tecnologias
-
-- **Front-end:** React, HTML, JavaScript e Bootstrap
-- **Back-end:** Node.js e Express
-- **Banco de dados:** MySQL
-
-## 👥 Equipe
-
-- Brena Vitória Aguiar Lemos
-- Catarina Thaís Lima Pimentel
-- Enzo Fernandes Paulino
-- Hafiz Oliveira Costa
-- Thaís Câncio Rodrigues de Góis
-
-## 🏫 Instituição
-
-**Universidade de Fortaleza — UNIFOR**
-
-Disciplina: Desenvolvimento de Plataformas Web
-
-## 🚧 Status
-
-**Etapa 1 — Plano de Trabalho:** concluída.
-
-Foram definidos o escopo do sistema, requisitos funcionais e não funcionais, casos de uso, fluxo de navegação, wireframes e protótipo no Figma, modelagem de dados, tecnologias e arquitetura.
-
-**Etapa 2 — MVP:** em desenvolvimento.
-
-O MVP desta etapa contempla:
-
-- Home;
-- Catálogo de universidades;
-- Detalhes da universidade;
-- Área administrativa de universidades;
-- CRUD de universidades;
-- Integração entre front-end, API e banco de dados;
-- Responsividade das interfaces.
-
-Nesta etapa, o desenvolvimento utiliza React + Bootstrap no front-end, Node.js + Express no back-end e MySQL para persistência dos dados.
-
-## 🔗 Links
-
-- **Repositório:** https://github.com/brenalemos09/unifor-exchange
-- **Trello:** https://trello.com/invite/b/6a97079f2a71436af601617a/ATTI88d87562c6b07786dc9cbd3cc9bcfbce1B77E1FD/unifor-exchange
-- **Figma (protótipo):** https://www.figma.com/design/hFSbuZDYrMKZYXx4D9NAeS/UNIFOR-Exchange-%E2%80%94-Prot%C3%B3tipo-Web?node-id=1-6
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
