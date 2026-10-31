@@ -1,0 +1,192 @@
+
+.pagina-cadastro {
+  min-height: 100vh;
+  display: flex;
+  align-items: stretch;
+  background-color: #f5f5f5;
+  padding: 40px;
+}
+
+.painel-cadastro {
+  width: 42%;
+  background-color: var(--ux-azul-escuro);
+  color: white;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 8px 0 0 8px;
+}
+
+.marca-cadastro {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  margin-bottom: 35px;
+}
+
+.simbolo-cadastro {
+  width: 20px;
+  height: 20px;
+  background-color: var(--ux-laranja);
+  border-radius: 50%;
+}
+
+.conteudo-painel-cadastro h2 {
+  color: white;
+  font-size: 17px;
+  line-height: 1.5;
+  margin-bottom: 25px;
+}
+
+.beneficios-cadastro {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.beneficios-cadastro li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.check-cadastro {
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.icone-beneficio {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.formulario-cadastro {
+  width: 58%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 50px;
+  border-radius: 0 8px 8px 0;
+}
+
+.conteudo-formulario-cadastro {
+  width: 100%;
+  max-width: 380px;
+}
+
+.conteudo-formulario-cadastro h1 {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.subtitulo-cadastro {
+  color: var(--ux-texto-secundario);
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.campo-cadastro {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.campo-cadastro label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.campo-cadastro input,
+.campo-cadastro select {
+  width: 100%;
+  height: 37px;
+  border: 1px solid #d9dce5;
+  border-radius: 6px;
+  padding: 0 12px;
+  font-family: var(--ux-fonte);
+  font-size: 12px;
+  background-color: white;
+}
+
+.campo-cadastro input:focus,
+.campo-cadastro select:focus {
+  outline: none;
+  border-color: var(--ux-azul);
+}
+
+.termos-cadastro {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 14px;
+  font-size: 11px;
+  color: var(--ux-texto-secundario);
+}
+
+.termos-cadastro input {
+  accent-color: var(--ux-azul);
+}
+
+.botao-cadastro {
+  width: 100%;
+  height: 40px;
+  background-color: var(--ux-azul);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.botao-cadastro:hover {
+  background-color: var(--ux-azul-escuro);
+}
+
+.ja-tem-conta {
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--ux-texto-secundario);
+}
+
+.ja-tem-conta a {
+  color: var(--ux-azul);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .pagina-cadastro {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .painel-cadastro,
+  .formulario-cadastro {
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  .painel-cadastro {
+    padding: 35px;
+  }
+
+  .formulario-cadastro {
+    padding: 35px 25px;
+  }
+}

@@ -1,0 +1,315 @@
+
+.topo-jornada {
+  min-height: 64px;
+  padding: 0 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background-color: white;
+}
+
+.marca-jornada {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #202020;
+  text-decoration: none;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.simbolo-jornada {
+  width: 22px;
+  height: 22px;
+  background-color: var(--ux-azul);
+  border-radius: 50%;
+}
+
+.menu-jornada {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.menu-jornada a {
+  color: #555;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.botao-entrar-jornada {
+  background-color: var(--ux-azul);
+  color: white;
+  padding: 8px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.pagina-jornada {
+  min-height: calc(100vh - 125px);
+  padding: 0 8% 30px;
+  background-color: white;
+}
+
+.boas-vindas-jornada {
+  min-height: 64px;
+  background-color: #002da6;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 5%;
+  margin: 0 -8% 22px;
+  color: white;
+}
+
+.avatar-jornada {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: #fba234;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.boas-vindas-jornada h1 {
+  font-size: 12px;
+  font-weight: 700;
+  margin: 0 0 3px;
+  color: white;
+}
+
+.boas-vindas-jornada p {
+  font-size: 10px;
+  margin: 0;
+}
+
+.favoritas-jornada h2,
+.resultado-perfil-jornada h2,
+.checklist-jornada h2 {
+  font-size: 12px;
+  font-weight: 700;
+  color: #202020;
+  margin-bottom: 12px;
+}
+
+.grade-favoritas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.card-favorita {
+  overflow: hidden;
+  border: 1px solid #e8e8ed;
+  border-radius: 9px;
+  background-color: white;
+}
+
+.imagem-favorita {
+  height: 78px;
+  background-color: #e8eefe;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 9px;
+}
+
+.icone-favorita {
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background-color: var(--ux-azul);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+}
+
+.conteudo-favorita {
+  padding: 10px;
+}
+
+.conteudo-favorita h3 {
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 3px;
+  color: #202020;
+}
+
+.conteudo-favorita p {
+  font-size: 9px;
+  color: #777;
+  margin-bottom: 7px;
+}
+
+.etiquetas-favorita {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 7px;
+}
+
+.etiquetas-favorita span {
+  background-color: #ffefdb;
+  color: #a96917;
+  padding: 3px 6px;
+  border-radius: 10px;
+  font-size: 8px;
+}
+
+.conteudo-favorita a {
+  color: var(--ux-azul);
+  text-decoration: none;
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.resumo-jornada {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-top: 18px;
+}
+
+.resultado-perfil-jornada {
+  background-color: #f3f6fb;
+  border-radius: 9px;
+  padding: 14px;
+  align-self: start;
+}
+
+.resultado-perfil-conteudo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.resultado-perfil-conteudo strong {
+  font-size: 10px;
+  color: #202020;
+}
+
+.resultado-perfil-conteudo p {
+  color: #777;
+  font-size: 9px;
+  margin: 4px 0;
+}
+
+.resultado-perfil-conteudo a {
+  color: var(--ux-azul);
+  font-size: 9px;
+  text-decoration: none;
+}
+
+.resultado-perfil-conteudo .porcentagem-jornada {
+  color: var(--ux-azul);
+  font-size: 13px;
+}
+
+.checklist-jornada {
+  border: 1px solid #e8e8ed;
+  border-radius: 9px;
+  padding: 14px;
+}
+
+.lista-etapas-jornada {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.item-etapa-jornada {
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 9px;
+  border: 1px solid #ededf0;
+  border-radius: 6px;
+  font-size: 9px;
+  color: #555;
+  cursor: pointer;
+}
+
+.item-etapa-jornada input {
+  width: 13px;
+  height: 13px;
+  accent-color: #20a45a;
+  cursor: pointer;
+}
+
+.rodape-jornada {
+  min-height: 48px;
+  background-color: #002da6;
+  color: white;
+  padding: 14px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.rodape-jornada p {
+  font-size: 10px;
+  margin: 0;
+}
+
+.rodape-jornada nav {
+  display: flex;
+  gap: 18px;
+}
+
+.rodape-jornada a {
+  color: white;
+  text-decoration: none;
+  font-size: 10px;
+}
+
+@media (max-width: 700px) {
+  .topo-jornada {
+    flex-wrap: wrap;
+    padding: 15px 5%;
+  }
+
+  .menu-jornada {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    padding: 8px 0;
+  }
+
+  .pagina-jornada {
+    padding: 0 5% 25px;
+  }
+
+  .boas-vindas-jornada {
+    margin-left: -5%;
+    margin-right: -5%;
+  }
+
+  .grade-favoritas {
+    grid-template-columns: 1fr;
+  }
+
+  .resumo-jornada {
+    grid-template-columns: 1fr;
+  }
+
+  .rodape-jornada {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .rodape-jornada nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
