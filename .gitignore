@@ -1,0 +1,21 @@
+# Dependências e builds
+node_modules/
+dist/
+generated/
+
+# Segredos e configurações locais
+.env
+.env.local
+
+# Sistema / editor
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+*.log
+
+# Arquivos gerados por ferramentas de IA (não fazem parte do projeto)
+.agents/
+.claude/
+.cursor/
+.windsurf/
+skills-lock.json

@@ -1,0 +1,273 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model acompanhamento {
+  matricula              Int
+  id_conteudo            Int
+  data_conclusao         DateTime?              @db.Date
+  status                 acompanhamento_status  @default(pendente)
+  conteudo_institucional conteudo_institucional @relation(fields: [id_conteudo], references: [id_conteudo], onDelete: Cascade, map: "fk_acompanhamento_conteudo")
+  usuario                usuario                @relation(fields: [matricula], references: [matricula], onDelete: Cascade, map: "fk_acompanhamento_usuario")
+
+  @@id([matricula, id_conteudo])
+  @@index([id_conteudo], map: "fk_acompanhamento_conteudo")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model conteudo_institucional {
+  id_conteudo               Int                         @id @default(autoincrement())
+  tipo                      conteudo_institucional_tipo
+  titulo                    String                      @db.VarChar(200)
+  descricao                 String?                     @db.Text
+  ordem                     Int?
+  verificavel_elegibilidade Boolean?
+  contato                   String?                     @db.VarChar(255)
+  acompanhamento            acompanhamento[]
+}
+
+model curso {
+  id_curso           Int                  @id @default(autoincrement())
+  nome               String               @unique(map: "uq_curso_nome") @db.VarChar(150)
+  universidade_curso universidade_curso[]
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model favorito {
+  matricula       Int
+  id_universidade Int
+  data_insercao   DateTime     @default(now()) @db.DateTime(0)
+  universidade    universidade @relation(fields: [id_universidade], references: [id_universidade], onDelete: Cascade, map: "fk_favorito_universidade")
+  usuario         usuario      @relation(fields: [matricula], references: [matricula], onDelete: Cascade, map: "fk_favorito_usuario")
+
+  @@id([matricula, id_universidade])
+  @@index([id_universidade], map: "fk_favorito_universidade")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model feedback_experiencia {
+  id_experiencia  Int           @id @default(autoincrement())
+  titulo          String        @db.VarChar(200)
+  texto           String        @db.Text
+  nota            Decimal?      @db.Decimal(3, 1)
+  data_publicacao DateTime      @default(dbgenerated("(curdate())")) @db.Date
+  matricula       Int?
+  id_universidade Int?
+  universidade    universidade? @relation(fields: [id_universidade], references: [id_universidade], map: "fk_experiencia_universidade")
+  usuario         usuario?      @relation(fields: [matricula], references: [matricula], map: "fk_experiencia_usuario")
+
+  @@index([id_universidade], map: "fk_experiencia_universidade")
+  @@index([matricula], map: "fk_experiencia_usuario")
+}
+
+model idioma {
+  id_idioma           Int                   @id @default(autoincrement())
+  nome                String                @unique(map: "uq_idioma_nome") @db.VarChar(80)
+  universidade_idioma universidade_idioma[]
+}
+
+model modalidade {
+  id_modalidade           Int                       @id @default(autoincrement())
+  tipo                    String                    @unique(map: "uq_modalidade_tipo") @db.VarChar(50)
+  universidade_modalidade universidade_modalidade[]
+}
+
+model opcoes {
+  id_pergunta Int
+  texto       String   @db.VarChar(255)
+  item        String?  @db.VarChar(100)
+  peso        Int      @default(0)
+  pergunta    pergunta @relation(fields: [id_pergunta], references: [id_pergunta], onDelete: Cascade, map: "fk_opcoes_pergunta")
+
+  @@id([id_pergunta, texto])
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model oportunidade {
+  id_oportunidade Int                    @id @default(autoincrement())
+  titulo          String                 @db.VarChar(200)
+  categoria       oportunidade_categoria
+  descricao       String                 @db.Text
+  requisitos      String?                @db.Text
+  fonte_oficial   String?                @db.VarChar(255)
+  data_inicio     DateTime               @db.Date
+  data_fim        DateTime               @db.Date
+  id_universidade Int?
+  universidade    universidade?          @relation(fields: [id_universidade], references: [id_universidade], map: "fk_oportunidade_universidade")
+
+  @@index([id_universidade], map: "fk_oportunidade_universidade")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model pais {
+  nome_oficial String         @id @db.VarChar(150)
+  nome         String         @db.VarChar(100)
+  continente   String         @db.VarChar(50)
+  descricao    String?        @db.Text
+  universidade universidade[]
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model pergunta {
+  id_pergunta Int      @id @default(autoincrement())
+  id_quiz     Int
+  enunciado   String   @db.VarChar(255)
+  opcoes      opcoes[]
+  quiz        quiz     @relation(fields: [id_quiz], references: [id_quiz], onDelete: Cascade, map: "fk_pergunta_quiz")
+
+  @@index([id_quiz], map: "fk_pergunta_quiz")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model quiz {
+  id_quiz         Int              @id @default(autoincrement())
+  data_realizacao DateTime         @default(now()) @db.DateTime(0)
+  pergunta        pergunta[]
+  resultado_quiz  resultado_quiz[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model recomendacoes_universidades {
+  id_resultado           Int
+  universidade           String         @db.VarChar(200)
+  indice_compatibilidade Int
+  justificativa          String?        @db.Text
+  resultado_quiz         resultado_quiz @relation(fields: [id_resultado], references: [id_resultado], onDelete: Cascade, map: "fk_recomendacao_resultado")
+
+  @@id([id_resultado, universidade])
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model resultado_quiz {
+  id_resultado                Int                           @id @default(autoincrement())
+  id_quiz                     Int
+  matricula                   Int
+  perfil                      String?                       @db.VarChar(255)
+  descricao                   String?                       @db.Text
+  data_realizacao             DateTime                      @default(now()) @db.DateTime(0)
+  recomendacoes_universidades recomendacoes_universidades[]
+  quiz                        quiz                          @relation(fields: [id_quiz], references: [id_quiz], map: "fk_resultado_quiz")
+  usuario                     usuario                       @relation(fields: [matricula], references: [matricula], onDelete: Cascade, map: "fk_resultado_usuario")
+
+  @@index([id_quiz], map: "fk_resultado_quiz")
+  @@index([matricula], map: "fk_resultado_usuario")
+}
+
+model telefone {
+  matricula            Int     @id
+  telefone_pessoal     String? @db.VarChar(20)
+  telefone_residencial String? @db.VarChar(20)
+  usuario              usuario @relation(fields: [matricula], references: [matricula], onDelete: Cascade, map: "fk_telefone_usuario")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model token_recuperacao {
+  matricula      Int
+  codigo         Int
+  data_expiracao DateTime @db.DateTime(0)
+  utilizado      Boolean  @default(false)
+  usuario        usuario  @relation(fields: [matricula], references: [matricula], onDelete: Cascade, map: "fk_token_usuario")
+
+  @@id([matricula, codigo])
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model universidade {
+  id_universidade         Int                       @id @default(autoincrement())
+  nome                    String                    @db.VarChar(200)
+  pais_nome_oficial       String                    @db.VarChar(150)
+  cidade                  String                    @db.VarChar(100)
+  descricao               String?                   @db.Text
+  informacoes_convenio    String?                   @db.Text
+  fonte_oficial           String?                   @db.VarChar(255)
+  favorito                favorito[]
+  feedback_experiencia    feedback_experiencia[]
+  oportunidade            oportunidade[]
+  pais                    pais                      @relation(fields: [pais_nome_oficial], references: [nome_oficial], map: "fk_universidade_pais")
+  universidade_curso      universidade_curso[]
+  universidade_idioma     universidade_idioma[]
+  universidade_modalidade universidade_modalidade[]
+
+  @@index([pais_nome_oficial], map: "fk_universidade_pais")
+  @@index([nome], map: "idx_universidade_nome")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model universidade_curso {
+  id_universidade Int
+  id_curso        Int
+  curso           curso        @relation(fields: [id_curso], references: [id_curso], onDelete: Cascade, map: "fk_unicurso_curso")
+  universidade    universidade @relation(fields: [id_universidade], references: [id_universidade], onDelete: Cascade, map: "fk_unicurso_universidade")
+
+  @@id([id_universidade, id_curso])
+  @@index([id_curso], map: "fk_unicurso_curso")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model universidade_idioma {
+  id_universidade Int
+  id_idioma       Int
+  idioma          idioma       @relation(fields: [id_idioma], references: [id_idioma], onDelete: Cascade, map: "fk_uniidioma_idioma")
+  universidade    universidade @relation(fields: [id_universidade], references: [id_universidade], onDelete: Cascade, map: "fk_uniidioma_universidade")
+
+  @@id([id_universidade, id_idioma])
+  @@index([id_idioma], map: "fk_uniidioma_idioma")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model universidade_modalidade {
+  id_universidade Int
+  id_modalidade   Int
+  modalidade      modalidade   @relation(fields: [id_modalidade], references: [id_modalidade], onDelete: Cascade, map: "fk_unimodalidade_modalidade")
+  universidade    universidade @relation(fields: [id_universidade], references: [id_universidade], onDelete: Cascade, map: "fk_unimodalidade_universidade")
+
+  @@id([id_universidade, id_modalidade])
+  @@index([id_modalidade], map: "fk_unimodalidade_modalidade")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model usuario {
+  matricula            Int                    @id @default(autoincrement())
+  nome                 String                 @db.VarChar(150)
+  email                String                 @unique(map: "uq_usuario_email") @db.VarChar(150)
+  senha_hash           String                 @db.VarChar(255)
+  tipo                 usuario_tipo           @default(estudante)
+  criado_em            DateTime               @default(now()) @db.DateTime(0)
+  acompanhamento       acompanhamento[]
+  favorito             favorito[]
+  feedback_experiencia feedback_experiencia[]
+  resultado_quiz       resultado_quiz[]
+  telefone             telefone?
+  token_recuperacao    token_recuperacao[]
+}
+
+enum conteudo_institucional_tipo {
+  requisito
+  contato
+  checklist_item
+}
+
+enum oportunidade_categoria {
+  intercambio_academico
+  dupla_titulacao
+  programa_internacional
+}
+
+enum acompanhamento_status {
+  pendente
+  concluido
+}
+
+enum usuario_tipo {
+  estudante
+  administrador
+}

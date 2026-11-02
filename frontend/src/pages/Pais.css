@@ -1,0 +1,393 @@
+
+.topo-pais {
+  min-height: 64px;
+  padding: 0 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background-color: white;
+}
+
+.marca-pais {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #202020;
+  text-decoration: none;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.simbolo-pais {
+  width: 22px;
+  height: 22px;
+  background-color: var(--ux-azul);
+  border-radius: 50%;
+}
+
+.menu-pais {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.menu-pais a {
+  color: #555;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.botao-entrar-pais {
+  background-color: var(--ux-azul);
+  color: white;
+  padding: 8px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.pagina-pais {
+  background-color: white;
+  min-height: calc(100vh - 120px);
+}
+
+.banner-pais {
+  background-color: var(--ux-azul-escuro);
+  color: white;
+  padding: 35px 8%;
+  min-height: 165px;
+}
+
+.identificacao-pais {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+/* Bandeira de Portugal */
+.bandeira-portugal {
+  width: 58px;
+  height: 38px;
+  min-width: 58px;
+  display: block;
+  position: relative;
+  border-radius: 4px;
+  background: linear-gradient(
+    to right,
+    #046a38 0%,
+    #046a38 40%,
+    #da291c 40%,
+    #da291c 100%
+  );
+  overflow: hidden;
+}
+
+.bandeira-portugal::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: #ffcc29;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  left: 34%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Bandeira da França */
+.bandeira-franca {
+  width: 58px;
+  height: 38px;
+  min-width: 58px;
+  display: block;
+  border-radius: 4px;
+  background: linear-gradient(
+    to right,
+    #002395 0%,
+    #002395 33.33%,
+    #ffffff 33.33%,
+    #ffffff 66.66%,
+    #ed2939 66.66%,
+    #ed2939 100%
+  );
+}
+
+/* Bandeira da Irlanda */
+.bandeira-irlanda {
+  width: 58px;
+  height: 38px;
+  min-width: 58px;
+  display: block;
+  border-radius: 4px;
+  background: linear-gradient(
+    to right,
+    #169b62 0%,
+    #169b62 33.33%,
+    #ffffff 33.33%,
+    #ffffff 66.66%,
+    #ff883e 66.66%,
+    #ff883e 100%
+  );
+}
+
+/* Bandeira da Bélgica */
+.bandeira-belgica {
+  width: 58px;
+  height: 38px;
+  min-width: 58px;
+  display: block;
+  border-radius: 4px;
+  background: linear-gradient(
+    to right,
+    #000000 0%,
+    #000000 33.33%,
+    #fae042 33.33%,
+    #fae042 66.66%,
+    #ed2939 66.66%,
+    #ed2939 100%
+  );
+}
+
+.identificacao-pais h1 {
+  color: white;
+  font-size: 20px;
+  margin: 0 0 3px;
+}
+
+.identificacao-pais p {
+  color: white;
+  font-size: 12px;
+  margin: 0;
+}
+
+.informacoes-pais {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.info-pais {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-radius: 7px;
+  padding: 10px 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 75px;
+}
+
+.info-pais span {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.info-pais strong {
+  font-size: 11px;
+  color: white;
+  font-weight: 600;
+}
+
+.lista-universidades-pais {
+  padding: 35px 8% 45px;
+}
+
+.titulo-universidades-pais {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.titulo-universidades-pais h2 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.titulo-universidades-pais p {
+  color: var(--ux-texto-secundario);
+  font-size: 12px;
+  margin: 0;
+}
+
+.grade-universidades-pais {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.card-universidade-pais {
+  border: 1px solid #e5e7ed;
+  border-radius: 9px;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.imagem-universidade-pais {
+  height: 95px;
+  background-color: #e9edff;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 12px;
+}
+
+.simbolo-universidade-pais {
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background-color: var(--ux-azul);
+}
+
+.localizacao-universidade-pais {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: white;
+  color: #7c8495;
+  font-size: 17px;
+}
+
+.conteudo-card-pais {
+  padding: 12px 11px 10px;
+}
+
+.conteudo-card-pais h3 {
+  font-size: 13px;
+  line-height: 1.4;
+  margin: 0 0 4px;
+}
+
+.conteudo-card-pais p {
+  font-size: 11px;
+  color: var(--ux-texto-secundario);
+  margin: 0 0 8px;
+}
+
+.etiquetas-universidade-pais {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 8px;
+}
+
+.etiquetas-universidade-pais span {
+  background-color: var(--ux-laranja-claro);
+  color: #b36b12;
+  border-radius: 12px;
+  padding: 3px 8px;
+  font-size: 9px;
+}
+
+.conteudo-card-pais a {
+  display: block;
+  border-top: 1px solid #eeeeee;
+  padding-top: 8px;
+  color: var(--ux-azul);
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.rodape-pais {
+  min-height: 55px;
+  padding: 14px 8%;
+  background-color: var(--ux-azul-escuro);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  color: white;
+}
+
+.rodape-pais p {
+  font-size: 10px;
+  margin: 0;
+  color: white;
+}
+
+.rodape-pais nav {
+  display: flex;
+  gap: 18px;
+}
+
+.rodape-pais a {
+  color: white;
+  text-decoration: none;
+  font-size: 10px;
+}
+
+@media (max-width: 850px) {
+  .menu-pais {
+    gap: 10px;
+  }
+
+  .menu-pais a {
+    font-size: 10px;
+  }
+
+  .grade-universidades-pais {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .rodape-pais {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .topo-pais {
+    flex-wrap: wrap;
+    padding: 15px 5%;
+  }
+
+  .menu-pais {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    padding: 8px 0;
+  }
+
+  .grade-universidades-pais {
+    grid-template-columns: 1fr;
+  }
+
+  .banner-pais {
+    padding: 28px 6%;
+  }
+
+  .lista-universidades-pais {
+    padding: 30px 6%;
+  }
+
+  .rodape-pais nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+.botao-voltar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 28px;
+  border: 1px solid #d5def7;
+  border-radius: 10px;
+  background-color: white;
+  color: var(--ux-azul-escuro);
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.botao-voltar:hover {
+  background-color: #e8eefe;
+  border-color: var(--ux-azul);
+  transform: translateX(-3px);
+}
