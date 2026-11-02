@@ -3,12 +3,16 @@ import cors from "cors";
 import { prisma } from "./prisma";
 import { authRouter } from "./routes/auth";
 import { catalogoRouter } from "./routes/catalogo";
+import { oportunidadesRouter } from "./routes/oportunidades";
+import { quizRouter } from "./routes/quiz";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/auth", authRouter);
 app.use(catalogoRouter);
+app.use(oportunidadesRouter);
+app.use(quizRouter);
 
 app.get("/saude", (_req, res) => {
   res.json({ ok: true });
