@@ -130,6 +130,52 @@ export function excluirUniversidade(id) {
   return chamar('/admin/universidades/' + id, { metodo: 'DELETE' })
 }
 
+export function criarPais(dados) {
+  return chamar('/admin/paises', { metodo: 'POST', corpo: dados })
+}
+
+export function editarPais(nomeOficial, dados) {
+  return chamar('/admin/paises/' + encodeURIComponent(nomeOficial), { metodo: 'PUT', corpo: dados })
+}
+
+export function excluirPais(nomeOficial) {
+  return chamar('/admin/paises/' + encodeURIComponent(nomeOficial), { metodo: 'DELETE' })
+}
+
+export function criarOportunidade(dados) {
+  return chamar('/admin/oportunidades', { metodo: 'POST', corpo: dados })
+}
+
+export function editarOportunidade(id, dados) {
+  return chamar('/admin/oportunidades/' + id, { metodo: 'PUT', corpo: dados })
+}
+
+export function excluirOportunidade(id) {
+  return chamar('/admin/oportunidades/' + id, { metodo: 'DELETE' })
+}
+
+// tipo: 'requisito', 'contato' ou 'checklist_item'
+export function listarConteudoPorTipo(tipo) {
+  var caminhos = {
+    requisito: '/conteudo/requisitos',
+    contato: '/conteudo/contatos',
+    checklist_item: '/conteudo/checklist',
+  }
+  return chamar(caminhos[tipo])
+}
+
+export function criarConteudo(dados) {
+  return chamar('/admin/conteudo', { metodo: 'POST', corpo: dados })
+}
+
+export function editarConteudo(id, dados) {
+  return chamar('/admin/conteudo/' + id, { metodo: 'PUT', corpo: dados })
+}
+
+export function excluirConteudo(id) {
+  return chamar('/admin/conteudo/' + id, { metodo: 'DELETE' })
+}
+
 export function listarPaises() {
   return chamar('/paises')
 }

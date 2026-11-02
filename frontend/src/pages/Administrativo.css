@@ -230,9 +230,10 @@
 }
 
 .modal-admin input,
-.modal-admin select {
+.modal-admin select,
+.modal-admin textarea {
   width: 100%;
-  height: 37px;
+  min-height: 37px;
   border: 1px solid #dddfe6;
   border-radius: 5px;
   padding: 0 10px;
@@ -268,7 +269,165 @@
   color: white;
 }
 
+.modal-admin {
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+}
+
+.modal-admin-largo {
+  max-width: 640px;
+}
+
+.modal-admin textarea {
+  min-height: 70px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.modal-admin input:disabled {
+  background-color: #f4f5f8;
+  color: #777;
+}
+
+.modal-admin small {
+  color: #888;
+  font-weight: 400;
+}
+
+.linha-modal-admin {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.marcadores-admin {
+  margin-bottom: 13px;
+  padding: 10px 12px;
+  border: 1px solid #e5e7ed;
+  border-radius: 6px;
+}
+
+.marcadores-admin legend {
+  float: none;
+  width: auto;
+  margin: 0;
+  padding: 0 4px;
+  color: #444;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.marcadores-admin div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+}
+
+.modal-admin .marcadores-admin label,
+.modal-admin .marcador-linha-admin {
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-weight: 400;
+}
+
+.modal-admin .marcador-linha-admin {
+  margin-bottom: 13px;
+}
+
+.modal-admin .marcadores-admin input,
+.modal-admin .marcador-linha-admin input {
+  width: auto;
+  min-height: 0;
+  height: auto;
+  accent-color: var(--ux-azul);
+}
+
+.erro-admin {
+  margin: 0;
+  color: #b00020;
+  font-size: 12px;
+}
+
+.mensagem-admin {
+  margin: 0 0 14px;
+  padding: 9px 13px;
+  border-radius: 6px;
+  background-color: #e7f6ec;
+  color: #11692f;
+  font-size: 12px;
+}
+
+.salvar-admin:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.dica-admin {
+  color: #888;
+  font-size: 10px;
+}
+
+.dica-menu-admin {
+  margin: 18px 12px 0;
+  color: #888;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.situacao-admin {
+  padding: 3px 9px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 600;
+  background-color: #eceef2;
+  color: #5b6270;
+}
+
+.situacao-admin.aberta {
+  background-color: #d8f5e5;
+  color: #078b48;
+}
+
+.situacao-admin.em_breve {
+  background-color: #ffedcf;
+  color: #b96b00;
+}
+
+.abas-admin {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.aba-admin {
+  padding: 7px 14px;
+  border: 1px solid #e1e4eb;
+  border-radius: 20px;
+  background-color: white;
+  color: #444;
+  font-family: var(--ux-fonte);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.aba-admin.ativa {
+  border-color: var(--ux-azul);
+  background-color: var(--ux-azul);
+  color: white;
+}
+
 @media (max-width: 700px) {
+  .linha-modal-admin {
+    grid-template-columns: 1fr;
+  }
+
+  .dica-menu-admin {
+    display: none;
+  }
+
   .conteudo-administrativo {
     flex-direction: column;
   }
