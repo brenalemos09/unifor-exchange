@@ -1,7 +1,12 @@
 // Comunicação do front-end com a API (back-end).
 // Todas as telas usam estas funções, assim o endereço da API fica em um só lugar.
 
-var URL_API = import.meta.env.VITE_API_URL || 'http://localhost:3000'
+var URL_API = (import.meta.env.VITE_API_URL || 'http://localhost:3000').replace(/\/$/, '')
+
+// No site publicado, VITE_API_URL precisa apontar para a API publicada
+if (import.meta.env.PROD && !import.meta.env.VITE_API_URL) {
+  console.warn('VITE_API_URL não foi definida no build: o site vai procurar a API em http://localhost:3000.')
+}
 
 var CHAVE_TOKEN = 'unifor-exchange-token'
 var CHAVE_USUARIO = 'unifor-exchange-usuario'
