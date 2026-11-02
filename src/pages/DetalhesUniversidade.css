@@ -1,0 +1,298 @@
+
+.topo-detalhes {
+  height: 76px;
+  padding: 0 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border-bottom: 1px solid #e8eaf0;
+  font-family: 'Inter', sans-serif;
+}
+
+.marca-detalhes {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #004af7;
+  text-decoration: none;
+  font-size: 19px;
+}
+
+.simbolo-detalhes {
+  width: 27px;
+  height: 27px;
+  border-radius: 8px;
+  background: #004af7;
+}
+
+.menu-detalhes {
+  display: flex;
+  align-items: center;
+  gap: 27px;
+}
+
+.menu-detalhes a,
+.rodape-detalhes a {
+  color: #4b5060;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.botao-entrar-detalhes {
+  padding: 11px 24px;
+  background: #004af7;
+  color: white;
+  border-radius: 7px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.caminho-detalhes {
+  padding: 22px 7%;
+  display: flex;
+  gap: 10px;
+  color: #858b99;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+}
+
+.caminho-detalhes a {
+  color: #004af7;
+  text-decoration: none;
+}
+
+.banner-detalhes {
+  height: 220px;
+  margin: 0 7%;
+  border-radius: 12px;
+  background: #e8eefe;
+}
+
+.pagina-detalhes {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 35px 24px 65px;
+  display: grid;
+  grid-template-columns: 1fr 310px;
+  gap: 45px;
+  font-family: 'Inter', sans-serif;
+  color: #1a1d29;
+}
+
+.identificacao-detalhes h1 {
+  margin: 0 0 10px;
+  color: #1a1d29;
+  font-size: 30px;
+  line-height: 1.3;
+}
+
+.identificacao-detalhes > p {
+  margin: 0;
+  color: #737987;
+  font-size: 15px;
+}
+
+.etiquetas-detalhes {
+  display: flex;
+  gap: 9px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.etiquetas-detalhes span {
+  padding: 7px 13px;
+  border-radius: 20px;
+  background: #e8eefe;
+  color: #004af7;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.acoes-detalhes {
+  display: flex;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.botao-favoritar,
+.botao-site-oficial {
+  padding: 12px 19px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.botao-favoritar {
+  border: 1px solid #d9deea;
+  background: white;
+  color: #333949;
+}
+
+.botao-site-oficial {
+  border: none;
+  background: #004af7;
+  color: white;
+}
+
+.botao-site-oficial:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.secao-sobre,
+.secao-cursos,
+.secao-requisitos {
+  margin-top: 38px;
+}
+
+.secao-sobre h2,
+.secao-cursos h2,
+.secao-requisitos h2 {
+  margin-bottom: 13px;
+  font-size: 19px;
+  color: #1a1d29;
+}
+
+.secao-sobre p,
+.secao-cursos p,
+.secao-requisitos li {
+  color: #626979;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.secao-requisitos ul {
+  padding-left: 20px;
+}
+
+.resumo-detalhes {
+  align-self: start;
+  padding: 25px;
+  border: 1px solid #e5e8ef;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 4px 18px rgba(20, 40, 90, 0.05);
+}
+
+.resumo-detalhes h2 {
+  margin: 0 0 22px;
+  font-size: 18px;
+}
+
+.item-resumo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 0;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.item-resumo:last-child {
+  border-bottom: none;
+}
+
+.item-resumo span {
+  color: #858b99;
+  font-size: 12px;
+}
+
+.item-resumo strong {
+  color: #252a38;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.rodape-detalhes {
+  padding: 28px 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  background: #002da6;
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
+
+.rodape-detalhes p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.rodape-detalhes nav {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.rodape-detalhes a {
+  color: white;
+}
+
+@media (max-width: 850px) {
+  .menu-detalhes {
+    display: none;
+  }
+
+  .pagina-detalhes {
+    grid-template-columns: 1fr;
+  }
+
+  .banner-detalhes {
+    height: 150px;
+  }
+
+  .rodape-detalhes {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 500px) {
+  .topo-detalhes {
+    padding: 0 18px;
+  }
+
+  .pagina-detalhes {
+    padding: 28px 20px 45px;
+  }
+
+  .identificacao-detalhes h1 {
+    font-size: 24px;
+  }
+
+  .acoes-detalhes {
+    flex-wrap: wrap;
+  }
+
+  .caminho-detalhes {
+    padding: 18px 20px;
+  }
+
+  .banner-detalhes {
+    margin: 0 20px;
+  }
+}
+.botao-voltar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin: 20px 0 0 7%;
+  border: 1px solid #d5def7;
+  border-radius: 10px;
+  background-color: white;
+  color: var(--ux-azul-escuro);
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.botao-voltar:hover {
+  background-color: #e8eefe;
+  border-color: var(--ux-azul);
+  transform: translateX(-3px);
+}

@@ -1,0 +1,239 @@
+
+.topo-oportunidades {
+  min-height: 64px;
+  padding: 0 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background-color: white;
+}
+
+.marca-oportunidades {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #202020;
+  text-decoration: none;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.simbolo-oportunidades {
+  width: 22px;
+  height: 22px;
+  background-color: var(--ux-azul);
+  border-radius: 50%;
+}
+
+.menu-oportunidades {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.menu-oportunidades a {
+  color: #555;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.botao-entrar-oportunidades {
+  background-color: var(--ux-azul);
+  color: white;
+  padding: 8px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.pagina-oportunidades {
+  min-height: calc(100vh - 125px);
+  background-color: white;
+}
+
+.cabecalho-oportunidades {
+  background-color: #f3f6fb;
+  padding: 30px 5% 22px;
+}
+
+.cabecalho-oportunidades h1 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #202020;
+  margin-bottom: 6px;
+}
+
+.cabecalho-oportunidades p {
+  font-size: 11px;
+  color: #666;
+  margin-bottom: 16px;
+}
+
+.filtros-oportunidades {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.filtro-oportunidade {
+  padding: 7px 15px;
+  border: 1px solid #e1e4eb;
+  border-radius: 20px;
+  background-color: white;
+  color: #444;
+  font-family: var(--ux-fonte);
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.filtro-oportunidade.ativo {
+  background-color: var(--ux-azul);
+  color: white;
+  border-color: var(--ux-azul);
+}
+
+.lista-oportunidades {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 12px 5% 35px;
+}
+
+.card-oportunidade {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  background-color: white;
+  border: 1px solid #ededf0;
+  border-radius: 9px;
+}
+
+.texto-oportunidade {
+  min-width: 0;
+}
+
+.categoria-oportunidade {
+  color: var(--ux-azul);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.texto-oportunidade h2 {
+  color: #202020;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 4px 0;
+}
+
+.texto-oportunidade p {
+  color: #777;
+  font-size: 10px;
+  margin: 0;
+}
+
+.status-oportunidade {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.status-oportunidade.aberto {
+  background-color: #d8f5e5;
+  color: #078b48;
+}
+
+.status-oportunidade.em-breve {
+  background-color: #ffedcf;
+  color: #b96b00;
+}
+
+.sem-oportunidades {
+  padding: 25px;
+  color: #777;
+  text-align: center;
+  font-size: 13px;
+}
+
+.rodape-oportunidades {
+  min-height: 48px;
+  background-color: #002da6;
+  color: white;
+  padding: 14px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.rodape-oportunidades p {
+  font-size: 10px;
+  margin: 0;
+}
+
+.rodape-oportunidades nav {
+  display: flex;
+  gap: 18px;
+}
+
+.rodape-oportunidades a {
+  color: white;
+  text-decoration: none;
+  font-size: 10px;
+}
+
+@media (max-width: 700px) {
+  .topo-oportunidades {
+    flex-wrap: wrap;
+    padding: 15px 5%;
+  }
+
+  .menu-oportunidades {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    padding: 8px 0;
+  }
+
+  .card-oportunidade {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .rodape-oportunidades {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .rodape-oportunidades nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+.botao-voltar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin: 20px 0 0 5%;
+  border: 1px solid #d5def7;
+  border-radius: 10px;
+  background-color: white;
+  color: var(--ux-azul-escuro);
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.botao-voltar:hover {
+  background-color: #e8eefe;
+  border-color: var(--ux-azul);
+  transform: translateX(-3px);
+}
