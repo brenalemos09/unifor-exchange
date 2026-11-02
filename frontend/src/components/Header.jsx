@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { obterUsuario, sair } from '../services/api'
+import { obterUsuario, sair, primeiroNomeFormatado } from '../services/api'
 import './Header.css'
 
 function Header() {
@@ -58,7 +58,7 @@ function Header() {
       {usuario ? (
         <div className="usuario-header">
           <span className="nome-usuario-header" title={usuario.email}>
-            Olá, {usuario.nome.split(' ')[0]}
+            Olá, {primeiroNomeFormatado(usuario.nome)}
           </span>
           <button type="button" className="botao-sair-header" onClick={clicarSair}>
             Sair

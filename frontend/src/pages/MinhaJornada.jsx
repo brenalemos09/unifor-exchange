@@ -4,6 +4,7 @@ import Header from '../components/Header'
 import Rodape from '../components/Rodape'
 import {
   obterUsuario,
+  primeiroNomeFormatado,
   listarFavoritos,
   desfavoritar,
   obterChecklist,
@@ -15,7 +16,7 @@ import './MinhaJornada.css'
 function MinhaJornada() {
   var navegar = useNavigate()
   var usuario = obterUsuario()
-  var primeiroNome = usuario ? usuario.nome.split(' ')[0] : ''
+  var primeiroNome = usuario ? primeiroNomeFormatado(usuario.nome) : ''
 
   var [favoritos, setFavoritos] = useState([])
   var [checklist, setChecklist] = useState(null)

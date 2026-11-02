@@ -20,6 +20,12 @@ export function obterUsuario() {
   return salvo ? JSON.parse(salvo) : null
 }
 
+// primeiro nome com a primeira letra maiúscula ("brena lemos" -> "Brena")
+export function primeiroNomeFormatado(nome) {
+  var primeiro = String(nome || '').trim().split(' ')[0]
+  return primeiro.charAt(0).toUpperCase() + primeiro.slice(1).toLowerCase()
+}
+
 export function sair() {
   localStorage.removeItem(CHAVE_TOKEN)
   localStorage.removeItem(CHAVE_USUARIO)
