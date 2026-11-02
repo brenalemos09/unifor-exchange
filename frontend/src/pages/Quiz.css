@@ -203,6 +203,25 @@
   cursor: not-allowed;
 }
 
+.aviso-quiz {
+  margin: 0 0 18px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background-color: var(--ux-azul-claro);
+  color: var(--ux-azul-escuro);
+  font-size: 13px;
+}
+
+.aviso-quiz a {
+  font-weight: 700;
+}
+
+.erro-quiz {
+  margin: 12px 0 0;
+  color: #b00020;
+  font-size: 13px;
+}
+
 @media (max-width: 700px) {
   .topo-quiz {
     flex-wrap: wrap;

@@ -163,3 +163,12 @@ export function listarResultadosQuiz() {
 export function buscarPais(nome) {
   return chamar('/paises/' + encodeURIComponent(nome))
 }
+
+export function obterQuiz() {
+  return chamar('/quiz')
+}
+
+// respostas: [{ id_pergunta, texto }]
+export function responderQuiz(respostas) {
+  return chamar('/quiz/responder', { metodo: 'POST', corpo: { respostas: respostas } })
+}
