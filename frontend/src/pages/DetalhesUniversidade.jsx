@@ -19,16 +19,19 @@ function DetalhesUniversidade() {
     var [salvandoFavorito, setSalvandoFavorito] = useState(false)
     var [dados, setDados] = useState(null)
     var [carregando, setCarregando] = useState(true)
+    var [erro, setErro] = useState('')
 
     useEffect(function () {
         setCarregando(true)
+        setErro('')
         buscarUniversidade(id)
             .then(function (u) {
                 setDados(u)
                 setCarregando(false)
             })
-            .catch(function () {
+            .catch(function (e) {
                 setDados(null)
+                setErro(e.message)
                 setCarregando(false)
             })
     }, [id])
@@ -60,20 +63,22 @@ function DetalhesUniversidade() {
         setSalvandoFavorito(false)
     }
 
-    if (carregando) {
+    if (carregando || !dados) {
         return (
-            <main className="detalhes-universidade">
-                <p>Carregando...</p>
-            </main>
-        )
-    }
-
-    if (!dados) {
-        return (
-            <main className="detalhes-universidade">
-                <h1>Universidade não encontrada</h1>
-                <Link to="/universidades">Voltar ao catálogo</Link>
-            </main>
+            <>
+                <Header />
+                <main className="pagina-detalhes estado-detalhes">
+                    {carregando ? (
+                        <p>Carregando universidade...</p>
+                    ) : (
+                        <div>
+                            <h1>{erro || 'Universidade não encontrada.'}</h1>
+                            <Link to="/universidades">Voltar ao catálogo</Link>
+                        </div>
+                    )}
+                </main>
+                <Rodape />
+            </>
         )
     }
 

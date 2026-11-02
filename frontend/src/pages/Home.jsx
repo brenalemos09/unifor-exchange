@@ -26,7 +26,7 @@ function Home() {
           </h1>
 
           <p>
-            Explore universidades conveniadas, oportunidades de mobilidade acadêmica e
+            Explore universidades conveniadas, oportunidades de mobilidade acadêmica e{' '}
             <br className="desktop-break" />
             descubra o destino mais compatível com o seu perfil — tudo em um só lugar.
           </p>

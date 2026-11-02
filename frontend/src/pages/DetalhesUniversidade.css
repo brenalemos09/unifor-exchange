@@ -374,3 +374,14 @@
   border-color: var(--ux-azul);
   transform: translateX(-3px);
 }
+.estado-detalhes {
+  min-height: 50vh;
+  display: block;
+  text-align: center;
+  color: #626979;
+}
+
+.estado-detalhes h1 {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
