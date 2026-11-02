@@ -42,6 +42,28 @@ npm run dev              # abre em http://localhost:5173
 
 O front usa a API em `http://localhost:3000`. Para mudar, copie `frontend/.env.example` para `frontend/.env`.
 
+## Variáveis de ambiente
+
+| Onde | Variável | Para quê | Padrão |
+|---|---|---|---|
+| `api/.env` | `DATABASE_*`, `JWT_SECRET` | Banco e assinatura do login (pedir ao Hafiz, nunca subir) | — |
+| `api/.env` | `PORT` | Porta da API | `3000` |
+| `api/.env` | `CORS_ORIGEM` | Endereço(s) do site que podem chamar a API, separados por vírgula | `http://localhost:5173` |
+| `api/.env` | `RECUPERACAO_DEMO` | `true` devolve o código de recuperação de senha na resposta (só para demonstração) | `false` |
+| `frontend/.env` | `VITE_API_URL` | Endereço da API usado pelo site (lido no build) | `http://localhost:3000` |
+
+Se o site rodar em outra porta (ex.: 5174), inclua o endereço em `CORS_ORIGEM`, senão o navegador bloqueia as chamadas.
+
+## Publicação (quando o grupo decidir)
+
+1. **API**: publicar a pasta `api/` em um serviço Node (rodando `npm install`, `npx prisma generate` e `npm start`). Configurar no painel as variáveis do `.env` e `CORS_ORIGEM` com o endereço do site publicado.
+2. **Front**: publicar a pasta `frontend/` em um serviço de site estático (`npm run build`, pasta `dist`). Configurar `VITE_API_URL` com o endereço da API publicada **antes** do build.
+3. O site usa rotas do React; `frontend/public/_redirects` (Netlify) e `frontend/vercel.json` (Vercel) já mandam todas as rotas para o `index.html`.
+
+## Recuperação de senha
+
+Ainda não há envio de e-mail. O código de 6 dígitos (vale 15 minutos) aparece no terminal da API. Com `RECUPERACAO_DEMO=true`, ele também aparece na tela, para demonstração.
+
 ## Login de teste
 
 Senha de todos os usuários de teste: `1234`. Administradores: matrículas `1911207` e `2111320`. Estudante: `2511483`.
@@ -55,8 +77,15 @@ A área administrativa (`/admin`) só abre para administradores.
 ## Status
 
 - **Etapa 1 — Plano de Trabalho:** concluída.
-- **Etapa 2 — MVP:** em desenvolvimento. Catálogo, detalhes e área administrativa (CRUD de universidades) ligados à API e ao banco; login funcionando.
-- Ainda com dados de exemplo no próprio front (serão ligados à API na Etapa 3): mapa, país, quiz/resultado, oportunidades, Minha Jornada e favoritos.
+- **Etapa 2 — MVP:** concluída. Catálogo, detalhes, login e CRUD de universidades ligados à API.
+- **Etapa 3 — Sistema completo:** todas as telas usam a API e o banco:
+  - Cadastro, login, sair, recuperação de senha e telas protegidas (Minha Jornada, resultado do quiz e admin).
+  - Mapa e página do país, catálogo, detalhes (com oportunidades e relatos), oportunidades com filtros.
+  - Favoritos e checklist da Minha Jornada salvos no banco.
+  - Quiz com recomendações, índice de compatibilidade e aviso de que o resultado é orientativo.
+  - Experiências de estudantes, requisitos, contatos e verificação de elegibilidade.
+  - Área administrativa com cadastro, edição e exclusão de universidades, países, oportunidades e conteúdo institucional.
+  - Telas conferidas no celular (375px), tablet e computador; CORS restrito ao endereço do site.
 
 ## Fluxo de Git
 
