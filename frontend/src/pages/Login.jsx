@@ -1,10 +1,13 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { entrar } from '../services/api'
 import './Login.css'
 
 function Login() {
   var navegar = useNavigate()
+  var localizacao = useLocation()
+  // página que a pessoa tentou abrir antes de ser mandada para o login
+  var destino = localizacao.state && localizacao.state.de
   var [login, setLogin] = useState('')
   var [senha, setSenha] = useState('')
   var [erro, setErro] = useState('')
@@ -16,7 +19,8 @@ function Login() {
     setCarregando(true)
     try {
       var usuario = await entrar(login, senha)
-      navegar(usuario.tipo === 'administrador' ? '/admin' : '/universidades')
+      if (destino) navegar(destino, { replace: true })
+      else navegar(usuario.tipo === 'administrador' ? '/admin' : '/universidades')
     } catch (e) {
       setErro(e.message)
     }
@@ -26,17 +30,17 @@ function Login() {
   return (
     <main className="pagina-login">
       <section className="painel-login">
-        <div className="marca-login">
+        <Link to="/" className="marca-login">
           <span className="simbolo-login"></span>
           <strong>UNIFOR Exchange</strong>
-        </div>
+        </Link>
 
         <div className="texto-painel-login">
           <h1>Seu próximo destino acadêmico começa aqui.</h1>
 
           <p>
             Acesse sua conta para acompanhar sua jornada de intercâmbio,
-            explorar e oportunidades disponíveis.
+            explorar universidades e oportunidades disponíveis.
           </p>
         </div>
 
@@ -51,6 +55,11 @@ function Login() {
       <section className="formulario-login">
         <div className="conteudo-formulario">
           <h2>Bem-vindo de volta</h2>
+          {destino && (
+            <p className="aviso-login" role="status">
+              Faça login para acessar esta página.
+            </p>
+          )}
           <p className="subtitulo-login">
             Entre com sua conta institucional para continuar.
           </p>
@@ -85,10 +94,10 @@ function Login() {
             </div>
 
             <div className="recuperar-senha">
-              <a href="#recuperar">Esqueceu a senha?</a>
+              <Link to="/recuperar-senha">Esqueceu a senha?</Link>
             </div>
 
-            {erro && <p role="alert" style={{ color: '#b00020' }}>{erro}</p>}
+            {erro && <p role="alert" className="erro-login">{erro}</p>}
 
             <button type="submit" className="botao-login" disabled={carregando}>
               {carregando ? 'Entrando...' : 'Entrar'}
@@ -96,7 +105,7 @@ function Login() {
           </form>
 
           <p className="criar-conta">
-            Ainda não tem conta? <a href="#cadastro">Criar conta</a>
+            Ainda não tem conta? <Link to="/cadastro" state={localizacao.state}>Criar conta</Link>
           </p>
         </div>
       </section>

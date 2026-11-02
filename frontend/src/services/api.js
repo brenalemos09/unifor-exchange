@@ -1,7 +1,12 @@
 // Comunicação do front-end com a API (back-end).
 // Todas as telas usam estas funções, assim o endereço da API fica em um só lugar.
 
-var URL_API = import.meta.env.VITE_API_URL || 'http://localhost:3000'
+var URL_API = (import.meta.env.VITE_API_URL || 'http://localhost:3000').replace(/\/$/, '')
+
+// No site publicado, VITE_API_URL precisa apontar para a API publicada
+if (import.meta.env.PROD && !import.meta.env.VITE_API_URL) {
+  console.warn('VITE_API_URL não foi definida no build: o site vai procurar a API em http://localhost:3000.')
+}
 
 var CHAVE_TOKEN = 'unifor-exchange-token'
 var CHAVE_USUARIO = 'unifor-exchange-usuario'
@@ -15,9 +20,29 @@ export function obterUsuario() {
   return salvo ? JSON.parse(salvo) : null
 }
 
+// primeiro nome com a primeira letra maiúscula ("brena lemos" -> "Brena")
+export function primeiroNomeFormatado(nome) {
+  var primeiro = String(nome || '').trim().split(' ')[0]
+  return primeiro.charAt(0).toUpperCase() + primeiro.slice(1).toLowerCase()
+}
+
 export function sair() {
   localStorage.removeItem(CHAVE_TOKEN)
   localStorage.removeItem(CHAVE_USUARIO)
+}
+
+export function estaLogado() {
+  return !!obterToken() && !!obterUsuario()
+}
+
+export function ehAdministrador() {
+  var usuario = obterUsuario()
+  return !!usuario && usuario.tipo === 'administrador'
+}
+
+function guardarSessao(dados) {
+  localStorage.setItem(CHAVE_TOKEN, dados.token)
+  localStorage.setItem(CHAVE_USUARIO, JSON.stringify(dados.usuario))
 }
 
 async function chamar(caminho, opcoes) {
@@ -42,16 +67,36 @@ async function chamar(caminho, opcoes) {
   var dados = await resposta.json().catch(function () {
     return {}
   })
-  if (!resposta.ok) throw new Error(dados.erro || 'Erro ao falar com a API.')
+  if (!resposta.ok) {
+    // token vencido ou inválido: limpa a sessão para a pessoa entrar de novo
+    if (resposta.status === 401 && token) sair()
+    throw new Error(dados.erro || 'Erro ao falar com a API.')
+  }
   return dados
 }
 
-/* ---------- login ---------- */
+/* ---------- login, cadastro e recuperação de senha ---------- */
 export async function entrar(login, senha) {
   var dados = await chamar('/auth/login', { metodo: 'POST', corpo: { login: login, senha: senha } })
-  localStorage.setItem(CHAVE_TOKEN, dados.token)
-  localStorage.setItem(CHAVE_USUARIO, JSON.stringify(dados.usuario))
+  guardarSessao(dados)
   return dados.usuario
+}
+
+export async function cadastrar(dados) {
+  var resposta = await chamar('/auth/cadastro', { metodo: 'POST', corpo: dados })
+  guardarSessao(resposta)
+  return resposta.usuario
+}
+
+export function pedirCodigoRecuperacao(login) {
+  return chamar('/auth/recuperar', { metodo: 'POST', corpo: { login: login } })
+}
+
+export function redefinirSenha(login, codigo, novaSenha) {
+  return chamar('/auth/redefinir', {
+    metodo: 'POST',
+    corpo: { login: login, codigo: Number(codigo), nova_senha: novaSenha },
+  })
 }
 
 /* ---------- catálogo (público) ---------- */
@@ -59,13 +104,24 @@ export function listarFiltros() {
   return chamar('/filtros')
 }
 
-export function listarUniversidades(filtros) {
+// monta "?chave=valor&..." só com os filtros preenchidos
+function montarFiltros(filtros) {
   var parametros = new URLSearchParams()
   Object.keys(filtros || {}).forEach(function (chave) {
     if (filtros[chave]) parametros.set(chave, filtros[chave])
   })
   var texto = parametros.toString()
-  return chamar('/universidades' + (texto ? '?' + texto : ''))
+  return texto ? '?' + texto : ''
+}
+
+export function listarUniversidades(filtros) {
+  return chamar('/universidades' + montarFiltros(filtros))
+}
+
+/* ---------- oportunidades (público) ---------- */
+// filtros: { categoria, status, universidade, busca }
+export function listarOportunidades(filtros) {
+  return chamar('/oportunidades' + montarFiltros(filtros))
 }
 
 export function buscarUniversidade(id) {
@@ -85,6 +141,122 @@ export function excluirUniversidade(id) {
   return chamar('/admin/universidades/' + id, { metodo: 'DELETE' })
 }
 
+export function criarPais(dados) {
+  return chamar('/admin/paises', { metodo: 'POST', corpo: dados })
+}
+
+export function editarPais(nomeOficial, dados) {
+  return chamar('/admin/paises/' + encodeURIComponent(nomeOficial), { metodo: 'PUT', corpo: dados })
+}
+
+export function excluirPais(nomeOficial) {
+  return chamar('/admin/paises/' + encodeURIComponent(nomeOficial), { metodo: 'DELETE' })
+}
+
+export function criarOportunidade(dados) {
+  return chamar('/admin/oportunidades', { metodo: 'POST', corpo: dados })
+}
+
+export function editarOportunidade(id, dados) {
+  return chamar('/admin/oportunidades/' + id, { metodo: 'PUT', corpo: dados })
+}
+
+export function excluirOportunidade(id) {
+  return chamar('/admin/oportunidades/' + id, { metodo: 'DELETE' })
+}
+
+// tipo: 'requisito', 'contato' ou 'checklist_item'
+export function listarConteudoPorTipo(tipo) {
+  var caminhos = {
+    requisito: '/conteudo/requisitos',
+    contato: '/conteudo/contatos',
+    checklist_item: '/conteudo/checklist',
+  }
+  return chamar(caminhos[tipo])
+}
+
+export function criarConteudo(dados) {
+  return chamar('/admin/conteudo', { metodo: 'POST', corpo: dados })
+}
+
+export function editarConteudo(id, dados) {
+  return chamar('/admin/conteudo/' + id, { metodo: 'PUT', corpo: dados })
+}
+
+export function excluirConteudo(id) {
+  return chamar('/admin/conteudo/' + id, { metodo: 'DELETE' })
+}
+
 export function listarPaises() {
   return chamar('/paises')
+}
+
+/* ---------- área do estudante (precisa de login) ---------- */
+export function listarFavoritos() {
+  return chamar('/favoritos')
+}
+
+export function favoritar(idUniversidade) {
+  return chamar('/favoritos/' + idUniversidade, { metodo: 'POST' })
+}
+
+export function desfavoritar(idUniversidade) {
+  return chamar('/favoritos/' + idUniversidade, { metodo: 'DELETE' })
+}
+
+export function obterChecklist() {
+  return chamar('/checklist')
+}
+
+export function marcarItemChecklist(idConteudo, concluido) {
+  return chamar('/checklist/' + idConteudo, { metodo: 'PUT', corpo: { concluido: concluido } })
+}
+
+/* ---------- quiz ---------- */
+export function listarResultadosQuiz() {
+  return chamar('/quiz/resultados')
+}
+
+export function buscarPais(nome) {
+  return chamar('/paises/' + encodeURIComponent(nome))
+}
+
+export function obterQuiz() {
+  return chamar('/quiz')
+}
+
+// respostas: [{ id_pergunta, texto }]
+export function responderQuiz(respostas) {
+  return chamar('/quiz/responder', { metodo: 'POST', corpo: { respostas: respostas } })
+}
+
+/* ---------- conteúdo institucional, elegibilidade e relatos ---------- */
+export function listarRequisitos() {
+  return chamar('/conteudo/requisitos')
+}
+
+export function listarContatos() {
+  return chamar('/conteudo/contatos')
+}
+
+export function listarPerguntasElegibilidade() {
+  return chamar('/elegibilidade')
+}
+
+// atendidos: ids dos requisitos que a pessoa diz cumprir
+export function verificarElegibilidade(atendidos) {
+  return chamar('/elegibilidade', { metodo: 'POST', corpo: { atendidos: atendidos } })
+}
+
+// filtros: { universidade, busca }
+export function listarRelatos(filtros) {
+  return chamar('/relatos' + montarFiltros(filtros))
+}
+
+export function publicarRelato(dados) {
+  return chamar('/relatos', { metodo: 'POST', corpo: dados })
+}
+
+export function excluirRelato(id) {
+  return chamar('/relatos/' + id, { metodo: 'DELETE' })
 }

@@ -221,3 +221,13 @@
     flex-direction: column;
   }
 }
+
+/* rodapé sempre no fim da tela, mesmo quando a página é curta */
+.home-original {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-original > main {
+  flex: 1;
+}

@@ -130,6 +130,13 @@
   align-items: center;
   justify-content: center;
   font-size: 13px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.icone-favorita:hover {
+  background-color: #b00020;
 }
 
 .conteudo-favorita {
@@ -334,4 +341,48 @@
   background-color: #e8eefe;
   border-color: var(--ux-azul);
   transform: translateX(-3px);
+}
+.aviso-jornada,
+.vazio-jornada {
+  color: #666;
+  font-size: 12px;
+}
+
+.vazio-jornada a {
+  color: var(--ux-azul);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.progresso-jornada {
+  margin-bottom: 12px;
+}
+
+.texto-progresso-jornada {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 10px;
+  color: #555;
+}
+
+.texto-progresso-jornada strong {
+  color: #20a45a;
+}
+
+.barra-progresso-jornada {
+  height: 7px;
+  border-radius: 10px;
+  background-color: #ededf0;
+  overflow: hidden;
+}
+
+.barra-progresso-jornada div {
+  height: 100%;
+  background-color: #20a45a;
+  transition: width 0.3s;
+}
+
+.item-etapa-jornada input:disabled {
+  cursor: wait;
 }

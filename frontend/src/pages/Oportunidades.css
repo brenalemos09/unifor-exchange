@@ -153,6 +153,55 @@
   color: #b96b00;
 }
 
+.status-oportunidade.encerrado {
+  background-color: #eceef2;
+  color: #5b6270;
+}
+
+.grupo-filtros-oportunidades {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.rotulo-filtro-oportunidades {
+  min-width: 62px;
+  color: #444;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.contagem-oportunidades {
+  margin: 4px 0 10px;
+  color: #777;
+  font-size: 11px;
+}
+
+.texto-oportunidade p.requisitos-oportunidade {
+  margin-top: 6px;
+  color: #555;
+}
+
+.detalhes-oportunidade {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin-top: 8px;
+  font-size: 10px;
+  color: #555;
+}
+
+.detalhes-oportunidade a {
+  color: var(--ux-azul);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.detalhes-oportunidade a:hover {
+  text-decoration: underline;
+}
+
 .sem-oportunidades {
   padding: 25px;
   color: #777;
@@ -203,6 +252,12 @@
   .card-oportunidade {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .grupo-filtros-oportunidades {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
   }
 
   .rodape-oportunidades {

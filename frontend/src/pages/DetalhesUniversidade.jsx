@@ -1,48 +1,84 @@
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { Link, useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import Header from '../components/Header'
+import Rodape from '../components/Rodape'
 import {
-    alternarFavorito,
-    verificarFavorito,
-} from '../utils/favoritos'
-import { buscarUniversidade } from '../services/api'
+    buscarUniversidade,
+    estaLogado,
+    listarFavoritos,
+    favoritar,
+    desfavoritar,
+} from '../services/api'
 import './DetalhesUniversidade.css'
 
 function DetalhesUniversidade() {
     var { id } = useParams()
-    var slug = id
     var navegar = useNavigate()
-    var [favorita, setFavorita] = useState(verificarFavorito(slug))
+    var localizacao = useLocation()
+    var [favorita, setFavorita] = useState(false)
+    var [salvandoFavorito, setSalvandoFavorito] = useState(false)
     var [dados, setDados] = useState(null)
     var [carregando, setCarregando] = useState(true)
+    var [erro, setErro] = useState('')
 
     useEffect(function () {
         setCarregando(true)
+        setErro('')
         buscarUniversidade(id)
             .then(function (u) {
                 setDados(u)
                 setCarregando(false)
             })
-            .catch(function () {
+            .catch(function (e) {
                 setDados(null)
+                setErro(e.message)
                 setCarregando(false)
             })
     }, [id])
 
-    if (carregando) {
-        return (
-            <main className="detalhes-universidade">
-                <p>Carregando...</p>
-            </main>
-        )
+    useEffect(function () {
+        if (!estaLogado()) return
+        listarFavoritos()
+            .then(function (lista) {
+                setFavorita(lista.some(function (f) {
+                    return String(f.id_universidade) === String(id)
+                }))
+            })
+            .catch(function () {})
+    }, [id])
+
+    async function clicarFavorito() {
+        if (!estaLogado()) {
+            navegar('/login', { state: { de: localizacao.pathname } })
+            return
+        }
+        setSalvandoFavorito(true)
+        try {
+            if (favorita) await desfavoritar(id)
+            else await favoritar(id)
+            setFavorita(!favorita)
+        } catch (e) {
+            window.alert(e.message)
+        }
+        setSalvandoFavorito(false)
     }
 
-    if (!dados) {
+    if (carregando || !dados) {
         return (
-            <main className="detalhes-universidade">
-                <h1>Universidade não encontrada</h1>
-                <Link to="/universidades">Voltar ao catálogo</Link>
-            </main>
+            <>
+                <Header />
+                <main className="pagina-detalhes estado-detalhes">
+                    {carregando ? (
+                        <p>Carregando universidade...</p>
+                    ) : (
+                        <div>
+                            <h1>{erro || 'Universidade não encontrada.'}</h1>
+                            <Link to="/universidades">Voltar ao catálogo</Link>
+                        </div>
+                    )}
+                </main>
+                <Rodape />
+            </>
         )
     }
 
@@ -92,16 +128,10 @@ function DetalhesUniversidade() {
                             <button
                                 type="button"
                                 className="botao-favoritar"
-                                onClick={function () {
-                                    alternarFavorito({
-                                        slug: slug,
-                                        nome: universidade.nome,
-                                        cidade: universidade.cidade,
-                                        etiquetas: dados.modalidades.concat(dados.idiomas),
-                                    })
-
-                                    setFavorita(verificarFavorito(slug))
-                                }}
+                                onClick={clicarFavorito}
+                                disabled={salvandoFavorito}
+                                aria-pressed={favorita}
+                                title={estaLogado() ? '' : 'Entre para salvar favoritos'}
                             >
                                 {favorita ? '♥ Favoritado' : '♡ Favoritar'}
                             </button>
@@ -146,13 +176,60 @@ function DetalhesUniversidade() {
                     </section>
 
                     <section className="secao-requisitos">
-                        <h2>Requisitos para candidatura</h2>
-                        <ul>
-                            <li>Verificar os critérios de participação no edital.</li>
-                            <li>Conferir os requisitos acadêmicos da instituição.</li>
-                            <li>Observar as exigências de proficiência no idioma.</li>
-                            <li>Consultar os prazos e documentos necessários.</li>
-                        </ul>
+                        <h2>Oportunidades nesta universidade</h2>
+                        {dados.oportunidades.length > 0 ? (
+                            <ul>
+                                {dados.oportunidades.map(function (o) {
+                                    return (
+                                        <li key={o.id_oportunidade}>
+                                            {o.titulo}{' '}
+                                            <span className={'situacao-detalhes ' + o.status}>
+                                                {{ aberta: 'Inscrições abertas', em_breve: 'Em breve', encerrada: 'Encerrada' }[o.status]}
+                                            </span>
+                                        </li>
+                                    )
+                                })}
+                            </ul>
+                        ) : (
+                            <p>Nenhuma oportunidade cadastrada para esta universidade no momento.</p>
+                        )}
+                        <p>
+                            <Link to="/oportunidades">Ver todas as oportunidades</Link>
+                            {' · '}
+                            <Link to="/requisitos">Requisitos para candidatura</Link>
+                            {' · '}
+                            <Link to="/elegibilidade">Verificar elegibilidade</Link>
+                        </p>
+                    </section>
+
+                    <section className="secao-relatos-detalhes">
+                        <h2>
+                            Experiências de estudantes
+                            {dados.nota_media !== null && (
+                                <span className="nota-media-detalhes">Nota média {dados.nota_media}</span>
+                            )}
+                        </h2>
+                        {dados.relatos.length > 0 ? (
+                            dados.relatos.slice(0, 3).map(function (relato) {
+                                return (
+                                    <article className="relato-detalhes" key={relato.id_experiencia}>
+                                        <strong>{relato.titulo}</strong>
+                                        <p>{relato.texto}</p>
+                                        <span>
+                                            Por {relato.autor}
+                                            {relato.nota !== null && ' · nota ' + relato.nota}
+                                        </span>
+                                    </article>
+                                )
+                            })
+                        ) : (
+                            <p>Ainda não há relatos sobre esta universidade.</p>
+                        )}
+                        <p>
+                            <Link to={'/relatos?universidade=' + id}>
+                                {dados.relatos.length > 3 ? 'Ver todos os relatos' : 'Ver relatos e compartilhar o seu'} →
+                            </Link>
+                        </p>
                     </section>
                 </section>
 
@@ -186,18 +263,7 @@ function DetalhesUniversidade() {
                 </aside>
             </main>
 
-            <footer className="rodape-detalhes">
-                <p>
-                    UNIFOR Exchange — plataforma de apoio à orientação.
-                    Não substitui os processos oficiais da UNIFOR.
-                </p>
-
-                <nav>
-                    <Link to="/universidades">Perguntas</Link>
-                    <Link to="/universidades">Contato e Suporte</Link>
-                    <Link to="/universidades">Experiências de Estudantes</Link>
-                </nav>
-            </footer>
+            <Rodape />
         </>
     )
 }

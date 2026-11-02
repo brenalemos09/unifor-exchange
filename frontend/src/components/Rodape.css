@@ -1,0 +1,43 @@
+.rodape-site {
+  min-height: 48px;
+  background-color: #002da6;
+  color: white;
+  padding: 14px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.rodape-site p {
+  font-size: 10px;
+  margin: 0;
+}
+
+.rodape-site nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.rodape-site a {
+  color: white;
+  text-decoration: none;
+  font-size: 10px;
+}
+
+.rodape-site a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 700px) {
+  .rodape-site {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .rodape-site nav {
+    justify-content: center;
+    gap: 10px 16px;
+  }
+}

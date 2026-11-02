@@ -391,3 +391,34 @@
   border-color: var(--ux-azul);
   transform: translateX(-3px);
 }
+.bandeira-generica {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: var(--ux-laranja);
+  border: 3px solid white;
+}
+
+.descricao-pais {
+  max-width: 720px;
+  margin: 0 0 18px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.aviso-pais {
+  text-align: center;
+  color: var(--ux-texto-secundario);
+  font-size: 14px;
+}
+
+.aviso-pais h1 {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.etiquetas-universidade-pais {
+  flex-wrap: wrap;
+}

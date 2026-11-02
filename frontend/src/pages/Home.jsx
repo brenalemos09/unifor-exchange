@@ -1,26 +1,59 @@
 
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import {
+  listarUniversidades,
+  listarPaises,
+  listarOportunidades,
+  listarRelatos,
+} from '../services/api'
+import Header from '../components/Header'
+import Rodape from '../components/Rodape'
 import './Home.css'
 
 function Home() {
+  // números reais vindos do banco (null = ainda carregando ou API fora do ar)
+  var [numeros, setNumeros] = useState({
+    universidades: null,
+    paises: null,
+    oportunidades: null,
+    relatos: null,
+  })
+
+  useEffect(function () {
+    var ativo = true
+    function contar(promessa) {
+      return promessa.then(
+        function (lista) {
+          return Array.isArray(lista) ? lista.length : null
+        },
+        function () {
+          return null
+        }
+      )
+    }
+    Promise.all([
+      contar(listarUniversidades()),
+      contar(listarPaises()),
+      contar(listarOportunidades()),
+      contar(listarRelatos()),
+    ]).then(function (r) {
+      if (ativo) {
+        setNumeros({ universidades: r[0], paises: r[1], oportunidades: r[2], relatos: r[3] })
+      }
+    })
+    return function () {
+      ativo = false
+    }
+  }, [])
+
+  function mostrar(valor) {
+    return valor === null ? '—' : valor
+  }
+
   return (
     <div className="home-original">
-      <header className="home-header">
-        <Link to="/" className="home-logo">
-          <span className="home-logo-circle"></span>
-          <strong>UNIFOR Exchange</strong>
-        </Link>
-
-        <nav className="home-nav">
-          <Link to="/mapa">Mapa</Link>
-          <Link to="/universidades">Universidades</Link>
-          <Link to="/quiz">Quiz de Perfil</Link>
-          <Link to="/oportunidades">Oportunidades</Link>
-          <Link to="/minha-jornada">Minha Jornada</Link>
-        </nav>
-
-        <Link to="/login" className="home-login">Entrar</Link>
-      </header>
+      <Header />
 
       <main>
         <section className="home-banner">
@@ -39,7 +72,7 @@ function Home() {
           </h1>
 
           <p>
-            Explore universidades conveniadas, oportunidades de mobilidade acadêmica e
+            Explore universidades conveniadas, oportunidades de mobilidade acadêmica e{' '}
             <br className="desktop-break" />
             descubra o destino mais compatível com o seu perfil — tudo em um só lugar.
           </p>
@@ -57,26 +90,28 @@ function Home() {
 
         <section className="home-stats">
           <div className="home-stat">
-            <strong>140+</strong>
-            <span>Instituições parceiras</span>
+            <strong>{mostrar(numeros.universidades)}</strong>
+            <span>Universidades parceiras</span>
           </div>
 
           <div className="home-stat">
-            <strong>30</strong>
-            <span>Países com convênio ativo</span>
+            <strong>{mostrar(numeros.paises)}</strong>
+            <span>Países de destino</span>
           </div>
 
           <div className="home-stat">
-            <strong>120</strong>
-            <span>Alunos da UNIFOR em<br /> intercâmbio por ano</span>
+            <strong>{mostrar(numeros.oportunidades)}</strong>
+            <span>Oportunidades cadastradas</span>
           </div>
 
           <div className="home-stat">
-            <strong>15</strong>
-            <span>Programas de dupla titulação</span>
+            <strong>{mostrar(numeros.relatos)}</strong>
+            <span>Experiências de estudantes</span>
           </div>
         </section>
       </main>
+
+      <Rodape />
     </div>
   )
 }

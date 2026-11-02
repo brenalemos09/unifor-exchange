@@ -1,28 +1,72 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
-import { obterFavoritos } from '../utils/favoritos'
+import Rodape from '../components/Rodape'
+import {
+  obterUsuario,
+  primeiroNomeFormatado,
+  listarFavoritos,
+  desfavoritar,
+  obterChecklist,
+  marcarItemChecklist,
+  listarResultadosQuiz,
+} from '../services/api'
 import './MinhaJornada.css'
 
 function MinhaJornada() {
   var navegar = useNavigate()
-  var universidades = obterFavoritos()
-  var resultadosQuiz = JSON.parse(localStorage.getItem('resultadoQuiz') || '[]')
-  var melhorResultado = resultadosQuiz[0]
+  var usuario = obterUsuario()
+  var primeiroNome = usuario ? primeiroNomeFormatado(usuario.nome) : ''
 
-  var etapas = [
-    'Passaporte válido emitido',
-    'Cópia do histórico escolar',
-    'Comprovante de proficiência no idioma',
-    'Carta de motivação enviada',
-  ]
+  var [favoritos, setFavoritos] = useState([])
+  var [checklist, setChecklist] = useState(null)
+  var [ultimoResultado, setUltimoResultado] = useState(null)
+  var [carregando, setCarregando] = useState(true)
+  var [erro, setErro] = useState('')
+  var [salvandoItem, setSalvandoItem] = useState(null)
 
-  var [concluidas, setConcluidas] = useState([true, true, false, false])
+  useEffect(function () {
+    Promise.all([listarFavoritos(), obterChecklist(), listarResultadosQuiz()])
+      .then(function (respostas) {
+        setFavoritos(respostas[0])
+        setChecklist(respostas[1])
+        setUltimoResultado(respostas[2][0] || null)
+        setCarregando(false)
+      })
+      .catch(function (e) {
+        setErro(e.message)
+        setCarregando(false)
+      })
+  }, [])
 
-  function alterarEtapa(indice) {
-    var novasEtapas = [...concluidas]
-    novasEtapas[indice] = !novasEtapas[indice]
-    setConcluidas(novasEtapas)
+  async function removerFavorito(idUniversidade) {
+    try {
+      await desfavoritar(idUniversidade)
+      setFavoritos(favoritos.filter(function (f) {
+        return f.id_universidade !== idUniversidade
+      }))
+    } catch (e) {
+      window.alert(e.message)
+    }
+  }
+
+  async function alterarItem(item) {
+    setSalvandoItem(item.id_conteudo)
+    try {
+      await marcarItemChecklist(item.id_conteudo, item.status !== 'concluido')
+      setChecklist(await obterChecklist())
+    } catch (e) {
+      window.alert(e.message)
+    }
+    setSalvandoItem(null)
+  }
+
+  // recomendação com maior índice do último quiz
+  var melhorRecomendacao = null
+  if (ultimoResultado && ultimoResultado.recomendacoes_universidades.length > 0) {
+    melhorRecomendacao = ultimoResultado.recomendacoes_universidades.slice().sort(function (a, b) {
+      return b.indice_compatibilidade - a.indice_compatibilidade
+    })[0]
   }
 
   return (
@@ -40,120 +84,144 @@ function MinhaJornada() {
           ←
         </button>
         <section className="boas-vindas-jornada">
-          <div className="avatar-jornada">M</div>
+          <div className="avatar-jornada">{primeiroNome.charAt(0).toUpperCase()}</div>
           <div>
-            <h1>Olá, Maria!</h1>
+            <h1>Olá, {primeiroNome}!</h1>
             <p>Acompanhe sua jornada de intercâmbio</p>
           </div>
         </section>
 
-        <section className="favoritas-jornada">
-          <h2>Suas universidades favoritas</h2>
+        {erro && <p className="aviso-jornada" role="alert">{erro}</p>}
+        {carregando && <p className="aviso-jornada">Carregando sua jornada...</p>}
 
-          <div className="grade-favoritas">
-            {universidades.length > 0 ? (
-              universidades.map(function (universidade) {
-                return (
-                  <article className="card-favorita" key={universidade.slug}>
-                    <div className="imagem-favorita">
-                      <span className="icone-favorita">♥</span>
-                    </div>
+        {!carregando && !erro && (
+          <>
+            <section className="favoritas-jornada">
+              <h2>Suas universidades favoritas</h2>
 
-                    <div className="conteudo-favorita">
-                      <h3>{universidade.nome}</h3>
-                      <p>{universidade.cidade}</p>
+              <div className="grade-favoritas">
+                {favoritos.length > 0 ? (
+                  favoritos.map(function (favorito) {
+                    var universidade = favorito.universidade
+                    return (
+                      <article className="card-favorita" key={favorito.id_universidade}>
+                        <div className="imagem-favorita">
+                          <button
+                            type="button"
+                            className="icone-favorita"
+                            aria-label={'Remover ' + universidade.nome + ' dos favoritos'}
+                            title="Remover dos favoritos"
+                            onClick={function () {
+                              removerFavorito(favorito.id_universidade)
+                            }}
+                          >
+                            ♥
+                          </button>
+                        </div>
 
-                      <div className="etiquetas-favorita">
-                        {universidade.etiquetas
-                          ? universidade.etiquetas.map(function (etiqueta) {
-                            return <span key={etiqueta}>{etiqueta}</span>
-                          })
-                          : (
-                            <>
-                              <span>{universidade.modalidade}</span>
-                              <span>{universidade.idioma}</span>
-                            </>
-                          )}
-                      </div>
+                        <div className="conteudo-favorita">
+                          <h3>{universidade.nome}</h3>
+                          <p>{universidade.cidade} · {universidade.pais_nome_oficial}</p>
 
-                      <Link to={'/universidades/' + universidade.slug}>
-                        Ver detalhes →
+                          <Link to={'/universidades/' + universidade.id_universidade}>
+                            Ver detalhes →
+                          </Link>
+                        </div>
+                      </article>
+                    )
+                  })
+                ) : (
+                  <p className="vazio-jornada">
+                    Você ainda não favoritou nenhuma universidade.{' '}
+                    <Link to="/universidades">Explorar o catálogo →</Link>
+                  </p>
+                )}
+              </div>
+            </section>
+
+            <section className="resumo-jornada">
+              <article className="resultado-perfil-jornada">
+                <h2>Resultado do seu quiz de perfil</h2>
+
+                {melhorRecomendacao ? (
+                  <div className="resultado-perfil-conteudo">
+                    <div>
+                      <strong>{melhorRecomendacao.universidade}</strong>
+                      <p>Maior compatibilidade com seu perfil</p>
+                      {ultimoResultado.perfil && <p>Perfil: {ultimoResultado.perfil}</p>}
+                      <Link to="/resultado-quiz">
+                        Ver todas as recomendações →
                       </Link>
                     </div>
-                  </article>
-                )
-              })
-            ) : (
-              <p>Você ainda não favoritou nenhuma universidade.</p>
-            )}
-          </div>
-        </section>
 
-        <section className="resumo-jornada">
-          <article className="resultado-perfil-jornada">
-            <h2>Resultado do seu quiz de perfil</h2>
+                    <strong className="porcentagem-jornada">
+                      {melhorRecomendacao.indice_compatibilidade}%
+                    </strong>
+                  </div>
+                ) : (
+                  <div className="resultado-perfil-conteudo">
+                    <div>
+                      <strong>
+                        {ultimoResultado
+                          ? 'Seu último quiz não encontrou universidades compatíveis.'
+                          : 'Você ainda não realizou o quiz.'}
+                      </strong>
+                      <p>Descubra quais universidades combinam com seu perfil.</p>
+                      <Link to="/quiz">{ultimoResultado ? 'Refazer o quiz →' : 'Fazer o quiz →'}</Link>
+                    </div>
+                  </div>
+                )}
+              </article>
 
-            {melhorResultado ? (
-              <div className="resultado-perfil-conteudo">
-                <div>
-                  <strong>{melhorResultado.nome}</strong>
-                  <p>{melhorResultado.cidade}</p>
-                  <p>Maior compatibilidade com seu perfil</p>
-                  <Link to="/resultado-quiz">
-                    Ver todas as recomendações →
-                  </Link>
-                </div>
+              <article className="checklist-jornada">
+                <h2>Sua jornada de intercâmbio</h2>
 
-                <strong className="porcentagem-jornada">
-                  {melhorResultado.compatibilidade}%
-                </strong>
-              </div>
-            ) : (
-              <div className="resultado-perfil-conteudo">
-                <div>
-                  <strong>Você ainda não realizou o quiz.</strong>
-                  <p>Descubra quais universidades combinam com seu perfil.</p>
-                  <Link to="/quiz">Fazer o quiz →</Link>
-                </div>
-              </div>
-            )}
-          </article>
+                {checklist && checklist.total > 0 ? (
+                  <>
+                    <div className="progresso-jornada">
+                      <div className="texto-progresso-jornada">
+                        <span>{checklist.concluidos} de {checklist.total} etapas concluídas</span>
+                        <strong>{checklist.progresso}%</strong>
+                      </div>
+                      <div
+                        className="barra-progresso-jornada"
+                        role="progressbar"
+                        aria-valuenow={checklist.progresso}
+                        aria-valuemin={0}
+                        aria-valuemax={100}
+                      >
+                        <div style={{ width: checklist.progresso + '%' }}></div>
+                      </div>
+                    </div>
 
-          <article className="checklist-jornada">
-            <h2>Sua jornada de intercâmbio</h2>
-
-            <div className="lista-etapas-jornada">
-              {etapas.map(function (etapa, indice) {
-                return (
-                  <label className="item-etapa-jornada" key={etapa}>
-                    <input
-                      type="checkbox"
-                      checked={concluidas[indice]}
-                      onChange={function () {
-                        alterarEtapa(indice)
-                      }}
-                    />
-                    <span>{etapa}</span>
-                  </label>
-                )
-              })}
-            </div>
-          </article>
-        </section>
+                    <div className="lista-etapas-jornada">
+                      {checklist.itens.map(function (item) {
+                        return (
+                          <label className="item-etapa-jornada" key={item.id_conteudo} title={item.descricao || ''}>
+                            <input
+                              type="checkbox"
+                              checked={item.status === 'concluido'}
+                              disabled={salvandoItem === item.id_conteudo}
+                              onChange={function () {
+                                alterarItem(item)
+                              }}
+                            />
+                            <span>{item.titulo}</span>
+                          </label>
+                        )
+                      })}
+                    </div>
+                  </>
+                ) : (
+                  <p className="vazio-jornada">Nenhuma etapa cadastrada pela coordenação ainda.</p>
+                )}
+              </article>
+            </section>
+          </>
+        )}
       </main>
 
-      <footer className="rodape-jornada">
-        <p>
-          UNIFOR Exchange — plataforma de apoio à orientação.
-          Não substitui os processos oficiais da UNIFOR.
-        </p>
-
-        <nav>
-          <a href="#perguntas">Perguntas</a>
-          <a href="#contato">Contato e Suporte</a>
-          <a href="#experiencias">Experiências de Estudantes</a>
-        </nav>
-      </footer>
+      <Rodape />
     </>
   )
 }

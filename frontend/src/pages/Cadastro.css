@@ -190,3 +190,19 @@
     padding: 35px 25px;
   }
 }
+
+a.marca-cadastro {
+  color: white;
+  text-decoration: none;
+}
+
+.erro-cadastro {
+  margin: 0 0 12px;
+  color: #b00020;
+  font-size: 12px;
+}
+
+.botao-cadastro:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
