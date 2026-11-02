@@ -1,6 +1,7 @@
 import { Link, useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import Header from '../components/Header'
+import Rodape from '../components/Rodape'
 import {
     buscarUniversidade,
     estaLogado,
@@ -170,13 +171,60 @@ function DetalhesUniversidade() {
                     </section>
 
                     <section className="secao-requisitos">
-                        <h2>Requisitos para candidatura</h2>
-                        <ul>
-                            <li>Verificar os critérios de participação no edital.</li>
-                            <li>Conferir os requisitos acadêmicos da instituição.</li>
-                            <li>Observar as exigências de proficiência no idioma.</li>
-                            <li>Consultar os prazos e documentos necessários.</li>
-                        </ul>
+                        <h2>Oportunidades nesta universidade</h2>
+                        {dados.oportunidades.length > 0 ? (
+                            <ul>
+                                {dados.oportunidades.map(function (o) {
+                                    return (
+                                        <li key={o.id_oportunidade}>
+                                            {o.titulo}{' '}
+                                            <span className={'situacao-detalhes ' + o.status}>
+                                                {{ aberta: 'Inscrições abertas', em_breve: 'Em breve', encerrada: 'Encerrada' }[o.status]}
+                                            </span>
+                                        </li>
+                                    )
+                                })}
+                            </ul>
+                        ) : (
+                            <p>Nenhuma oportunidade cadastrada para esta universidade no momento.</p>
+                        )}
+                        <p>
+                            <Link to="/oportunidades">Ver todas as oportunidades</Link>
+                            {' · '}
+                            <Link to="/requisitos">Requisitos para candidatura</Link>
+                            {' · '}
+                            <Link to="/elegibilidade">Verificar elegibilidade</Link>
+                        </p>
+                    </section>
+
+                    <section className="secao-relatos-detalhes">
+                        <h2>
+                            Experiências de estudantes
+                            {dados.nota_media !== null && (
+                                <span className="nota-media-detalhes">Nota média {dados.nota_media}</span>
+                            )}
+                        </h2>
+                        {dados.relatos.length > 0 ? (
+                            dados.relatos.slice(0, 3).map(function (relato) {
+                                return (
+                                    <article className="relato-detalhes" key={relato.id_experiencia}>
+                                        <strong>{relato.titulo}</strong>
+                                        <p>{relato.texto}</p>
+                                        <span>
+                                            Por {relato.autor}
+                                            {relato.nota !== null && ' · nota ' + relato.nota}
+                                        </span>
+                                    </article>
+                                )
+                            })
+                        ) : (
+                            <p>Ainda não há relatos sobre esta universidade.</p>
+                        )}
+                        <p>
+                            <Link to={'/relatos?universidade=' + id}>
+                                {dados.relatos.length > 3 ? 'Ver todos os relatos' : 'Ver relatos e compartilhar o seu'} →
+                            </Link>
+                        </p>
                     </section>
                 </section>
 
@@ -210,18 +258,7 @@ function DetalhesUniversidade() {
                 </aside>
             </main>
 
-            <footer className="rodape-detalhes">
-                <p>
-                    UNIFOR Exchange — plataforma de apoio à orientação.
-                    Não substitui os processos oficiais da UNIFOR.
-                </p>
-
-                <nav>
-                    <Link to="/universidades">Perguntas</Link>
-                    <Link to="/universidades">Contato e Suporte</Link>
-                    <Link to="/universidades">Experiências de Estudantes</Link>
-                </nav>
-            </footer>
+            <Rodape />
         </>
     )
 }

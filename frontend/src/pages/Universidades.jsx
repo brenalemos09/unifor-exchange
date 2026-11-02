@@ -1,6 +1,7 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import Header from '../components/Header'
+import Rodape from '../components/Rodape'
 import {
   listarUniversidades,
   listarFiltros,
@@ -234,18 +235,7 @@ function Universidades() {
         </section>
       </main>
 
-      <footer className="rodape-catalogo">
-        <p>
-          UNIFOR Exchange — plataforma de apoio à orientação.
-          Não substitui os processos oficiais da UNIFOR.
-        </p>
-
-        <nav>
-          <Link to="/quiz">Perguntas</Link>
-          <Link to="/minha-jornada">Contato e Suporte</Link>
-          <Link to="/oportunidades">Experiências de Estudantes</Link>
-        </nav>
-      </footer>
+      <Rodape />
     </>
   )
 }

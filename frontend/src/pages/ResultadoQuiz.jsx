@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import Header from '../components/Header'
+import Rodape from '../components/Rodape'
 import { listarResultadosQuiz, listarUniversidades } from '../services/api'
 import './ResultadoQuiz.css'
 
@@ -222,18 +223,7 @@ function ResultadoQuiz() {
         )}
       </main>
 
-      <footer className="rodape-resultado">
-        <p>
-          UNIFOR Exchange — plataforma de apoio à orientação.
-          Não substitui os processos oficiais da UNIFOR.
-        </p>
-
-        <nav>
-          <Link to="/universidades">Perguntas</Link>
-          <Link to="/universidades">Contato e Suporte</Link>
-          <Link to="/universidades">Experiências de Estudantes</Link>
-        </nav>
-      </footer>
+      <Rodape />
     </>
   )
 }

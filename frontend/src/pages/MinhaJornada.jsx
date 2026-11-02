@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
+import Rodape from '../components/Rodape'
 import {
   obterUsuario,
   listarFavoritos,
@@ -219,18 +220,7 @@ function MinhaJornada() {
         )}
       </main>
 
-      <footer className="rodape-jornada">
-        <p>
-          UNIFOR Exchange — plataforma de apoio à orientação.
-          Não substitui os processos oficiais da UNIFOR.
-        </p>
-
-        <nav>
-          <a href="#perguntas">Perguntas</a>
-          <a href="#contato">Contato e Suporte</a>
-          <a href="#experiencias">Experiências de Estudantes</a>
-        </nav>
-      </footer>
+      <Rodape />
     </>
   )
 }

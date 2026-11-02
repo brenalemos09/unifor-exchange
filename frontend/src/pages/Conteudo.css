@@ -1,0 +1,336 @@
+/* Estilo comum das telas de conteúdo: Requisitos, Contatos, Elegibilidade e Relatos */
+
+.pagina-conteudo {
+  min-height: calc(100vh - 125px);
+  background-color: white;
+  padding-bottom: 40px;
+}
+
+.cabecalho-conteudo {
+  background-color: #f3f6fb;
+  padding: 30px 5% 24px;
+}
+
+.cabecalho-conteudo h1 {
+  color: #202020;
+  font-size: 19px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.cabecalho-conteudo p {
+  max-width: 760px;
+  color: #666;
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.corpo-conteudo {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 22px 5% 0;
+}
+
+.corpo-conteudo h2 {
+  color: #202020;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 10px 0 14px;
+}
+
+.aviso-conteudo {
+  padding: 20px;
+  color: #666;
+  text-align: center;
+  font-size: 13px;
+}
+
+.erro-conteudo {
+  margin: 8px 0;
+  color: #b00020;
+  font-size: 12px;
+}
+
+.sucesso-conteudo {
+  margin: 8px 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background-color: #e7f6ec;
+  color: #11692f;
+  font-size: 12px;
+}
+
+.aviso-orientativo {
+  margin: 0 0 18px;
+  padding: 12px 16px;
+  border-left: 4px solid var(--ux-laranja);
+  border-radius: 8px;
+  background-color: var(--ux-laranja-claro);
+  color: #5a3a00;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* cards de lista (requisitos, contatos, relatos) */
+.lista-conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0;
+  margin: 0 0 20px;
+  list-style: none;
+}
+
+.card-conteudo {
+  padding: 14px 18px;
+  border: 1px solid #e9e9ed;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.card-conteudo h3 {
+  color: #202020;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+.card-conteudo p {
+  color: #555;
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.numero-conteudo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background-color: var(--ux-azul-claro);
+  color: var(--ux-azul);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.contato-conteudo {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--ux-azul);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  word-break: break-word;
+}
+
+.contato-conteudo:hover {
+  text-decoration: underline;
+}
+
+.grade-contatos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.meta-conteudo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  margin-top: 10px;
+  color: #777;
+  font-size: 11px;
+}
+
+.meta-conteudo a {
+  color: var(--ux-azul);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.nota-conteudo {
+  padding: 3px 9px;
+  border-radius: 12px;
+  background-color: var(--ux-laranja-claro);
+  color: #8a5300;
+  font-weight: 700;
+}
+
+.botao-conteudo {
+  display: inline-block;
+  padding: 9px 22px;
+  border: none;
+  border-radius: 25px;
+  background-color: var(--ux-azul);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.botao-conteudo:hover {
+  background-color: var(--ux-azul-escuro);
+  color: white;
+}
+
+.botao-conteudo:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.botao-secundario-conteudo {
+  padding: 5px 12px;
+  border: 1px solid #e1e4eb;
+  border-radius: 20px;
+  background-color: white;
+  color: #b00020;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+/* filtros e formulários */
+.filtros-conteudo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.filtros-conteudo input,
+.filtros-conteudo select,
+.formulario-conteudo input,
+.formulario-conteudo select,
+.formulario-conteudo textarea {
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 1px solid #dfe3eb;
+  border-radius: 8px;
+  background-color: white;
+  font-family: var(--ux-fonte);
+  font-size: 13px;
+}
+
+.filtros-conteudo input {
+  flex: 1;
+  min-width: 200px;
+}
+
+.formulario-conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding: 18px;
+  border: 1px solid #e9e9ed;
+  border-radius: 10px;
+  background-color: #fafbfd;
+}
+
+.formulario-conteudo label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: #333;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.formulario-conteudo textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.linha-formulario-conteudo {
+  display: grid;
+  grid-template-columns: 1fr 160px;
+  gap: 12px;
+}
+
+/* elegibilidade */
+.item-elegibilidade {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.item-elegibilidade input {
+  width: 17px;
+  height: 17px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: var(--ux-azul);
+}
+
+.texto-elegibilidade strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #202020;
+  font-size: 13px;
+}
+
+.texto-elegibilidade span {
+  display: block;
+  color: #555;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.resultado-elegibilidade {
+  margin: 18px 0;
+  padding: 18px;
+  border-radius: 10px;
+  border: 1px solid #e9e9ed;
+}
+
+.resultado-elegibilidade.elegivel {
+  border-color: #9bd8b2;
+  background-color: #eefaf2;
+}
+
+.resultado-elegibilidade.pendente {
+  border-color: #f3cf96;
+  background-color: #fff8ec;
+}
+
+.resultado-elegibilidade h2 {
+  margin-top: 0;
+}
+
+.resultado-elegibilidade ul {
+  margin: 8px 0;
+  padding-left: 20px;
+  font-size: 12px;
+  color: #444;
+}
+
+.resultado-elegibilidade p {
+  font-size: 12px;
+  color: #444;
+}
+
+@media (max-width: 700px) {
+  .grade-contatos,
+  .linha-formulario-conteudo {
+    grid-template-columns: 1fr;
+  }
+
+  .filtros-conteudo input {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .filtros-conteudo select {
+    width: 100%;
+  }
+}
+
+span.contato-conteudo {
+  color: #333;
+}

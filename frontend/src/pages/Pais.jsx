@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
+import Rodape from '../components/Rodape'
 import { buscarPais } from '../services/api'
 import './Pais.css'
 
@@ -162,18 +163,7 @@ function Pais() {
         </section>
       </main>
 
-      <footer className="rodape-pais">
-        <p>
-          UNIFOR Exchange — plataforma de apoio à orientação.
-          Não substitui os processos oficiais da UNIFOR.
-        </p>
-
-        <nav>
-          <a href="#perguntas">Perguntas</a>
-          <a href="#contato">Contato e Suporte</a>
-          <a href="#experiencias">Experiências de Estudantes</a>
-        </nav>
-      </footer>
+      <Rodape />
     </>
   )
 }

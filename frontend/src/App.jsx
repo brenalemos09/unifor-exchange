@@ -14,6 +14,10 @@ import MinhaJornada from './pages/MinhaJornada'
 import Administrativo from './pages/Administrativo'
 import DetalhesUniversidade from './pages/DetalhesUniversidade'
 import RecuperarSenha from './pages/RecuperarSenha'
+import Requisitos from './pages/Requisitos'
+import Contatos from './pages/Contatos'
+import Elegibilidade from './pages/Elegibilidade'
+import Relatos from './pages/Relatos'
 import RotaProtegida from './components/RotaProtegida'
 
 function App() {
@@ -28,6 +32,10 @@ function App() {
         <Route path="/universidades" element={<Universidades />} />
         <Route path="/universidades/:id" element={<DetalhesUniversidade />} />
         <Route path="/recuperar-senha" element={<RecuperarSenha />} />
+        <Route path="/requisitos" element={<Requisitos />} />
+        <Route path="/contatos" element={<Contatos />} />
+        <Route path="/elegibilidade" element={<Elegibilidade />} />
+        <Route path="/relatos" element={<Relatos />} />
         <Route path="/quiz" element={<Quiz />} />
         <Route path="/resultado-quiz" element={<RotaProtegida><ResultadoQuiz /></RotaProtegida>} />
         <Route path="/oportunidades" element={<Oportunidades />} />

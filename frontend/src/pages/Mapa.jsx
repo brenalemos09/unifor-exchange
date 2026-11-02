@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
+import Rodape from '../components/Rodape'
 import { MapContainer, TileLayer, CircleMarker, Tooltip } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import { listarPaises } from '../services/api'
@@ -166,6 +167,8 @@ function Mapa() {
           </div>
         </section>
       </main>
+
+      <Rodape />
     </>
   )
 }

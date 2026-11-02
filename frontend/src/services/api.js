@@ -172,3 +172,34 @@ export function obterQuiz() {
 export function responderQuiz(respostas) {
   return chamar('/quiz/responder', { metodo: 'POST', corpo: { respostas: respostas } })
 }
+
+/* ---------- conteúdo institucional, elegibilidade e relatos ---------- */
+export function listarRequisitos() {
+  return chamar('/conteudo/requisitos')
+}
+
+export function listarContatos() {
+  return chamar('/conteudo/contatos')
+}
+
+export function listarPerguntasElegibilidade() {
+  return chamar('/elegibilidade')
+}
+
+// atendidos: ids dos requisitos que a pessoa diz cumprir
+export function verificarElegibilidade(atendidos) {
+  return chamar('/elegibilidade', { metodo: 'POST', corpo: { atendidos: atendidos } })
+}
+
+// filtros: { universidade, busca }
+export function listarRelatos(filtros) {
+  return chamar('/relatos' + montarFiltros(filtros))
+}
+
+export function publicarRelato(dados) {
+  return chamar('/relatos', { metodo: 'POST', corpo: dados })
+}
+
+export function excluirRelato(id) {
+  return chamar('/relatos/' + id, { metodo: 'DELETE' })
+}

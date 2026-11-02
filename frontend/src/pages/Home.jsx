@@ -1,6 +1,7 @@
 
 import { Link } from 'react-router-dom'
 import Header from '../components/Header'
+import Rodape from '../components/Rodape'
 import './Home.css'
 
 function Home() {
@@ -63,6 +64,8 @@ function Home() {
           </div>
         </section>
       </main>
+
+      <Rodape />
     </div>
   )
 }
