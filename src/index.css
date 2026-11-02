@@ -1,0 +1,19 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #ffffff;
+}
+
+a {
+  transition: 0.2s;
+}
+
+a:hover {
+  opacity: 0.85;
+}

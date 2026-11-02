@@ -1,0 +1,223 @@
+
+.home-original {
+  min-height: 100vh;
+  background: #fff;
+  font-family: Arial, sans-serif;
+  color: #202b45;
+}
+
+.home-header {
+  height: 52px;
+  padding: 0 4%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.home-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #202b45;
+  text-decoration: none;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.home-logo-circle {
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  background: #0754ed;
+}
+
+.home-nav {
+  display: flex;
+  align-items: center;
+  gap: 27px;
+}
+
+.home-nav a {
+  color: #50566a;
+  font-size: 10px;
+  text-decoration: none;
+}
+
+.home-nav a:hover {
+  color: #0754ed;
+}
+
+.home-login {
+  padding: 6px 17px;
+  border-radius: 20px;
+  background: #0754ed;
+  color: white;
+  text-decoration: none;
+  font-size: 10px;
+}
+
+.home-banner {
+  min-height: 285px;
+  padding: 43px 20px 45px;
+  background: #0733ad;
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-flags {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+  margin-bottom: 20px;
+}
+
+.flag {
+  display: block;
+  width: 34px;
+  height: 25px;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px #001c66;
+}
+
+.flag-portugal {
+  background: linear-gradient(to right, #168447 40%, #ffcc00 40%);
+}
+
+.flag-france {
+  background: linear-gradient(to right, #003399 33.33%, white 33.33% 66.66%, #ed2939 66.66%);
+}
+
+.flag-italy {
+  background: linear-gradient(to right, #009246 33.33%, white 33.33% 66.66%, #ce2b37 66.66%);
+}
+
+.flag-germany {
+  background: linear-gradient(to bottom, #111 33.33%, #dd0000 33.33% 66.66%, #ffce00 66.66%);
+}
+
+.flag-ireland {
+  background: linear-gradient(to right, #169b62 33.33%, white 33.33% 66.66%, #ff883e 66.66%);
+}
+
+.home-banner h1 {
+  margin: 0 0 15px;
+  font-size: 26px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: white;
+}
+
+.home-banner p {
+  margin: 0 0 18px;
+  color: #dce5ff;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.home-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.home-action-primary,
+.home-action-secondary {
+  padding: 9px 19px;
+  border-radius: 22px;
+  font-size: 10px;
+  text-decoration: none;
+}
+
+.home-action-primary {
+  background: #fba234;
+  color: white;
+}
+
+.home-action-secondary {
+  border: 1px solid white;
+  color: white;
+}
+
+.home-action-primary:hover {
+  background: #e98d1d;
+}
+
+.home-action-secondary:hover {
+  background: white;
+  color: #0733ad;
+}
+
+.home-stats {
+  min-height: 100px;
+  padding: 24px 5%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  gap: 15px;
+  background: white;
+}
+
+.home-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 3px;
+}
+
+.home-stat strong {
+  color: #0733ad;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.home-stat span {
+  color: #747b8b;
+  font-size: 9px;
+  line-height: 1.3;
+}
+
+@media (max-width: 750px) {
+  .home-header {
+    height: auto;
+    padding: 15px 5%;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .home-nav {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .home-banner h1 {
+    font-size: 22px;
+  }
+
+  .desktop-break {
+    display: none;
+  }
+
+  .home-stats {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 25px;
+  }
+}
+
+@media (max-width: 420px) {
+  .home-banner h1 {
+    font-size: 19px;
+  }
+
+  .home-actions {
+    flex-direction: column;
+  }
+}
