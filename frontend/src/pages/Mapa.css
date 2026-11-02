@@ -103,7 +103,74 @@
   text-decoration: underline;
 }
 
+.aviso-mapa {
+  text-align: center;
+  color: #555;
+  font-size: 14px;
+}
+
+.ponto-legenda {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.ponto-azul {
+  background-color: #004af7;
+}
+
+.ponto-laranja {
+  background-color: #fba234;
+}
+
+.lista-paises-mapa {
+  margin-bottom: 55px;
+}
+
+.lista-paises-mapa h2 {
+  color: var(--ux-texto-primario);
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.grade-paises-mapa {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+.card-pais-mapa {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 14px 16px;
+  border: 1px solid #e1e6f5;
+  border-radius: 10px;
+  background-color: white;
+  color: #555;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.card-pais-mapa strong {
+  color: var(--ux-azul-escuro);
+  font-size: 15px;
+}
+
+.card-pais-mapa:hover {
+  border-color: #004af7;
+  box-shadow: 0 3px 12px rgba(0, 74, 247, 0.12);
+}
+
 @media (max-width: 768px) {
+  .pagina-mapa {
+    padding: 30px 16px;
+  }
+
   .cards-exploracao {
     grid-template-columns: 1fr;
   }

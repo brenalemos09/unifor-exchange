@@ -159,3 +159,7 @@ export function marcarItemChecklist(idConteudo, concluido) {
 export function listarResultadosQuiz() {
   return chamar('/quiz/resultados')
 }
+
+export function buscarPais(nome) {
+  return chamar('/paises/' + encodeURIComponent(nome))
+}

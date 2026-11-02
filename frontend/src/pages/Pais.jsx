@@ -1,79 +1,73 @@
-import { useParams, useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
+import { buscarPais } from '../services/api'
 import './Pais.css'
+
+// bandeiras desenhadas em CSS (Pais.css); os outros países usam um símbolo genérico
+var BANDEIRAS = ['portugal', 'franca', 'irlanda', 'belgica']
+
+function semAcento(texto) {
+  return texto.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+}
+
+// junta os valores sem repetir (ex.: idiomas de todas as universidades do país)
+function juntarSemRepetir(universidades, campo) {
+  var lista = []
+  universidades.forEach(function (u) {
+    u[campo].forEach(function (valor) {
+      if (!lista.includes(valor)) lista.push(valor)
+    })
+  })
+  return lista
+}
 
 function Pais() {
   var navegar = useNavigate()
   var { nomePais } = useParams()
+  var [pais, setPais] = useState(null)
+  var [carregando, setCarregando] = useState(true)
+  var [erro, setErro] = useState('')
 
-  var paises = {
-    portugal: {
-      nome: 'Portugal',
-      regiao: 'Europa',
-      capital: 'Lisboa',
-      moeda: 'Euro',
-      quantidade: 16,
-      modalidades: 'Semestral e Dupla titulação',
-      bandeira: 'bandeira-portugal',
-    },
-    franca: {
-      nome: 'França',
-      regiao: 'Europa',
-      capital: 'Paris',
-      moeda: 'Euro',
-      quantidade: 8,
-      modalidades: 'Semestral',
-      bandeira: 'bandeira-franca',
-    },
-    irlanda: {
-      nome: 'Irlanda',
-      regiao: 'Europa',
-      capital: 'Dublin',
-      moeda: 'Euro',
-      quantidade: 5,
-      modalidades: 'Semestral',
-      bandeira: 'bandeira-irlanda',
-    },
-    belgica: {
-      nome: 'Bélgica',
-      regiao: 'Europa',
-      capital: 'Bruxelas',
-      moeda: 'Euro',
-      quantidade: 6,
-      modalidades: 'Semestral',
-      bandeira: 'bandeira-belgica',
-    },
+  useEffect(function () {
+    setCarregando(true)
+    setErro('')
+    buscarPais(nomePais)
+      .then(function (dados) {
+        setPais(dados)
+        setCarregando(false)
+      })
+      .catch(function (e) {
+        setPais(null)
+        setErro(e.message)
+        setCarregando(false)
+      })
+  }, [nomePais])
+
+  if (carregando || !pais) {
+    return (
+      <>
+        <Header />
+        <main className="pagina-pais">
+          <section className="lista-universidades-pais">
+            {carregando ? (
+              <p className="aviso-pais">Carregando país...</p>
+            ) : (
+              <div className="aviso-pais">
+                <h1>{erro || 'País não encontrado.'}</h1>
+                <Link to="/mapa">Voltar ao mapa</Link>
+              </div>
+            )}
+          </section>
+        </main>
+      </>
+    )
   }
 
-  var pais = paises[nomePais] || paises.portugal
-
-  var universidades = {
-    portugal: [
-      { nome: 'Instituto Politécnico de Bragança', cidade: 'Bragança, Portugal' },
-      { nome: 'Universidade do Minho', cidade: 'Braga, Portugal' },
-      { nome: 'Universidade de Aveiro', cidade: 'Aveiro, Portugal' },
-      { nome: 'Universidade de Évora', cidade: 'Évora, Portugal' },
-      { nome: 'Instituto Universitário de Lisboa (ISCTE)', cidade: 'Lisboa, Portugal' },
-      { nome: 'Universidade Fernando Pessoa', cidade: 'Porto, Portugal' },
-    ],
-    franca: [
-      { nome: 'Universidade de Paris', cidade: 'Paris, França' },
-      { nome: 'Universidade de Lyon', cidade: 'Lyon, França' },
-      { nome: 'Universidade de Bordeaux', cidade: 'Bordeaux, França' },
-    ],
-    irlanda: [
-      { nome: 'Trinity College Dublin', cidade: 'Dublin, Irlanda' },
-      { nome: 'University College Dublin', cidade: 'Dublin, Irlanda' },
-      { nome: 'University of Galway', cidade: 'Galway, Irlanda' },
-    ],
-    belgica: [
-      { nome: 'KU Leuven', cidade: 'Leuven, Bélgica' },
-      { nome: 'Ghent University', cidade: 'Gante, Bélgica' },
-      { nome: 'Université libre de Bruxelles', cidade: 'Bruxelas, Bélgica' },
-    ],
-  }
-
-  var listaUniversidades = universidades[nomePais] || universidades.portugal
+  var slug = semAcento(pais.nome)
+  var classeBandeira = BANDEIRAS.includes(slug) ? 'bandeira-' + slug : 'bandeira-generica'
+  var idiomas = juntarSemRepetir(pais.universidades, 'idiomas')
+  var modalidades = juntarSemRepetir(pais.universidades, 'modalidades')
 
   return (
     <>
@@ -91,32 +85,34 @@ function Pais() {
         </button>
         <section className="banner-pais">
           <div className="identificacao-pais">
-            <span className={pais.bandeira}></span>
+            <span className={classeBandeira} aria-hidden="true"></span>
             <div>
               <h1>{pais.nome}</h1>
-              <p>{pais.regiao}</p>
+              <p>{pais.nome_oficial}</p>
             </div>
           </div>
 
+          {pais.descricao && <p className="descricao-pais">{pais.descricao}</p>}
+
           <div className="informacoes-pais">
             <div className="info-pais">
-              <span>Capital</span>
-              <strong>{pais.capital}</strong>
-            </div>
-
-            <div className="info-pais">
-              <span>Moeda</span>
-              <strong>{pais.moeda}</strong>
+              <span>Continente</span>
+              <strong>{pais.continente}</strong>
             </div>
 
             <div className="info-pais">
               <span>Universidades conveniadas</span>
-              <strong>{pais.quantidade}</strong>
+              <strong>{pais.universidades.length}</strong>
+            </div>
+
+            <div className="info-pais">
+              <span>Idiomas</span>
+              <strong>{idiomas.join(', ') || 'A consultar'}</strong>
             </div>
 
             <div className="info-pais">
               <span>Modalidades</span>
-              <strong>{pais.modalidades}</strong>
+              <strong>{modalidades.join(', ') || 'A consultar'}</strong>
             </div>
           </div>
         </section>
@@ -130,30 +126,39 @@ function Pais() {
             </p>
           </div>
 
-          <div className="grade-universidades-pais">
-            {listaUniversidades.map(function (universidade) {
-              return (
-                <article className="card-universidade-pais" key={universidade.nome}>
-                  <div className="imagem-universidade-pais">
-                    <span className="simbolo-universidade-pais"></span>
-                    <span className="localizacao-universidade-pais">⌖</span>
-                  </div>
-
-                  <div className="conteudo-card-pais">
-                    <h3>{universidade.nome}</h3>
-                    <p>{universidade.cidade}</p>
-
-                    <div className="etiquetas-universidade-pais">
-                      <span>Presencial</span>
-                      <span>Dupla titulação</span>
+          {pais.universidades.length === 0 ? (
+            <p className="aviso-pais">
+              Ainda não há universidades conveniadas cadastradas neste país.
+            </p>
+          ) : (
+            <div className="grade-universidades-pais">
+              {pais.universidades.map(function (universidade) {
+                return (
+                  <article className="card-universidade-pais" key={universidade.id_universidade}>
+                    <div className="imagem-universidade-pais">
+                      <span className="simbolo-universidade-pais"></span>
+                      <span className="localizacao-universidade-pais">⌖</span>
                     </div>
 
-                    <a href="#detalhes">Ver detalhes →</a>
-                  </div>
-                </article>
-              )
-            })}
-          </div>
+                    <div className="conteudo-card-pais">
+                      <h3>{universidade.nome}</h3>
+                      <p>{universidade.cidade}, {universidade.pais}</p>
+
+                      <div className="etiquetas-universidade-pais">
+                        {universidade.modalidades.concat(universidade.idiomas).map(function (etiqueta) {
+                          return <span key={etiqueta}>{etiqueta}</span>
+                        })}
+                      </div>
+
+                      <Link to={'/universidades/' + universidade.id_universidade}>
+                        Ver detalhes →
+                      </Link>
+                    </div>
+                  </article>
+                )
+              })}
+            </div>
+          )}
         </section>
       </main>
 
