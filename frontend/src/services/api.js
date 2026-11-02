@@ -133,3 +133,29 @@ export function excluirUniversidade(id) {
 export function listarPaises() {
   return chamar('/paises')
 }
+
+/* ---------- área do estudante (precisa de login) ---------- */
+export function listarFavoritos() {
+  return chamar('/favoritos')
+}
+
+export function favoritar(idUniversidade) {
+  return chamar('/favoritos/' + idUniversidade, { metodo: 'POST' })
+}
+
+export function desfavoritar(idUniversidade) {
+  return chamar('/favoritos/' + idUniversidade, { metodo: 'DELETE' })
+}
+
+export function obterChecklist() {
+  return chamar('/checklist')
+}
+
+export function marcarItemChecklist(idConteudo, concluido) {
+  return chamar('/checklist/' + idConteudo, { metodo: 'PUT', corpo: { concluido: concluido } })
+}
+
+/* ---------- quiz ---------- */
+export function listarResultadosQuiz() {
+  return chamar('/quiz/resultados')
+}

@@ -1,18 +1,21 @@
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { Link, useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import Header from '../components/Header'
 import {
-    alternarFavorito,
-    verificarFavorito,
-} from '../utils/favoritos'
-import { buscarUniversidade } from '../services/api'
+    buscarUniversidade,
+    estaLogado,
+    listarFavoritos,
+    favoritar,
+    desfavoritar,
+} from '../services/api'
 import './DetalhesUniversidade.css'
 
 function DetalhesUniversidade() {
     var { id } = useParams()
-    var slug = id
     var navegar = useNavigate()
-    var [favorita, setFavorita] = useState(verificarFavorito(slug))
+    var localizacao = useLocation()
+    var [favorita, setFavorita] = useState(false)
+    var [salvandoFavorito, setSalvandoFavorito] = useState(false)
     var [dados, setDados] = useState(null)
     var [carregando, setCarregando] = useState(true)
 
@@ -28,6 +31,33 @@ function DetalhesUniversidade() {
                 setCarregando(false)
             })
     }, [id])
+
+    useEffect(function () {
+        if (!estaLogado()) return
+        listarFavoritos()
+            .then(function (lista) {
+                setFavorita(lista.some(function (f) {
+                    return String(f.id_universidade) === String(id)
+                }))
+            })
+            .catch(function () {})
+    }, [id])
+
+    async function clicarFavorito() {
+        if (!estaLogado()) {
+            navegar('/login', { state: { de: localizacao.pathname } })
+            return
+        }
+        setSalvandoFavorito(true)
+        try {
+            if (favorita) await desfavoritar(id)
+            else await favoritar(id)
+            setFavorita(!favorita)
+        } catch (e) {
+            window.alert(e.message)
+        }
+        setSalvandoFavorito(false)
+    }
 
     if (carregando) {
         return (
@@ -92,16 +122,10 @@ function DetalhesUniversidade() {
                             <button
                                 type="button"
                                 className="botao-favoritar"
-                                onClick={function () {
-                                    alternarFavorito({
-                                        slug: slug,
-                                        nome: universidade.nome,
-                                        cidade: universidade.cidade,
-                                        etiquetas: dados.modalidades.concat(dados.idiomas),
-                                    })
-
-                                    setFavorita(verificarFavorito(slug))
-                                }}
+                                onClick={clicarFavorito}
+                                disabled={salvandoFavorito}
+                                aria-pressed={favorita}
+                                title={estaLogado() ? '' : 'Entre para salvar favoritos'}
                             >
                                 {favorita ? '♥ Favoritado' : '♡ Favoritar'}
                             </button>

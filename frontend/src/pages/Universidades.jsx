@@ -1,12 +1,19 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import Header from '../components/Header'
-import { obterFavoritos, alternarFavorito } from '../utils/favoritos'
-import { listarUniversidades, listarFiltros } from '../services/api'
+import {
+  listarUniversidades,
+  listarFiltros,
+  estaLogado,
+  listarFavoritos,
+  favoritar,
+  desfavoritar,
+} from '../services/api'
 import './Universidades.css'
 
 function Universidades() {
   var navegar = useNavigate()
+  var localizacao = useLocation()
   var [universidades, setUniversidades] = useState([])
   var [opcoes, setOpcoes] = useState({ paises: [], idiomas: [], modalidades: [], cursos: [] })
   var [carregando, setCarregando] = useState(true)
@@ -21,11 +28,39 @@ function Universidades() {
       })
   }, [])
 
-  var [favoritos, setFavoritos] = useState(obterFavoritos())
+  // ids das universidades favoritas do usuário logado
+  var [favoritos, setFavoritos] = useState([])
 
-  function clicarFavorito(universidade) {
-    var atualizados = alternarFavorito(universidade)
-    setFavoritos(atualizados)
+  useEffect(function () {
+    if (!estaLogado()) return
+    listarFavoritos()
+      .then(function (lista) {
+        setFavoritos(lista.map(function (f) {
+          return f.id_universidade
+        }))
+      })
+      .catch(function () {
+        setFavoritos([])
+      })
+  }, [])
+
+  async function clicarFavorito(id) {
+    if (!estaLogado()) {
+      navegar('/login', { state: { de: localizacao.pathname } })
+      return
+    }
+    var jaEra = favoritos.includes(id)
+    // atualiza a tela na hora e desfaz se a API recusar
+    setFavoritos(jaEra
+      ? favoritos.filter(function (f) { return f !== id })
+      : favoritos.concat(id))
+    try {
+      if (jaEra) await desfavoritar(id)
+      else await favoritar(id)
+    } catch (e) {
+      setFavoritos(favoritos)
+      window.alert(e.message)
+    }
   }
 
   var [busca, setBusca] = useState('')
@@ -144,11 +179,12 @@ function Universidades() {
           <div className="grade-catalogo">
             {universidadesFiltradas.map(function (u) {
               var universidade = {
-                slug: String(u.id_universidade),
+                id: u.id_universidade,
                 nome: u.nome,
                 cidade: u.cidade + ', ' + u.pais,
                 etiquetas: u.modalidades.concat(u.idiomas),
               }
+              var favorita = favoritos.includes(u.id_universidade)
               return (
                 <article className="card-catalogo" key={u.id_universidade}>
                   <div className="imagem-card-catalogo">
@@ -156,22 +192,14 @@ function Universidades() {
                     <button
                       type="button"
                       className="favorito-catalogo"
-                      aria-label={
-                        favoritos.some(function (item) {
-                          return item.slug === universidade.slug
-                        })
-                          ? 'Remover dos favoritos'
-                          : 'Adicionar aos favoritos'
-                      }
+                      aria-label={favorita ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+                      aria-pressed={favorita}
+                      title={estaLogado() ? '' : 'Entre para salvar favoritos'}
                       onClick={function () {
-                        clicarFavorito(universidade)
+                        clicarFavorito(universidade.id)
                       }}
                     >
-                      {favoritos.some(function (item) {
-                        return item.slug === universidade.slug
-                      })
-                        ? '♥'
-                        : '♡'}
+                      {favorita ? '♥' : '♡'}
                     </button>
                   </div>
 
@@ -185,7 +213,7 @@ function Universidades() {
                       })}
                     </div>
 
-                    <Link to={`/universidades/${universidade.slug}`}>
+                    <Link to={'/universidades/' + universidade.id}>
                       Ver detalhes →
                     </Link>
                   </div>
