@@ -1,59 +1,72 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
+import { listarOportunidades } from '../services/api'
 import './Oportunidades.css'
+
+// valores aceitos pela API em /oportunidades
+var CATEGORIAS = [
+  { valor: '', nome: 'Todas' },
+  { valor: 'intercambio_academico', nome: 'Intercâmbio acadêmico' },
+  { valor: 'dupla_titulacao', nome: 'Dupla titulação' },
+  { valor: 'programa_internacional', nome: 'Programa internacional' },
+]
+
+var STATUS = [
+  { valor: '', nome: 'Todos' },
+  { valor: 'aberta', nome: 'Inscrições abertas' },
+  { valor: 'em_breve', nome: 'Em breve' },
+  { valor: 'encerrada', nome: 'Encerradas' },
+]
+
+var NOME_STATUS = { aberta: 'Inscrições abertas', em_breve: 'Em breve', encerrada: 'Encerrada' }
+var CLASSE_STATUS = { aberta: 'aberto', em_breve: 'em-breve', encerrada: 'encerrado' }
+
+function nomeCategoria(valor) {
+  var achada = CATEGORIAS.find(function (c) {
+    return c.valor === valor
+  })
+  return achada ? achada.nome : valor
+}
+
+// a API devolve "2026-10-01T00:00:00.000Z"; mostra 01/10/2026 sem mexer no fuso
+function formatarData(texto) {
+  var partes = String(texto).slice(0, 10).split('-')
+  return partes[2] + '/' + partes[1] + '/' + partes[0]
+}
 
 function Oportunidades() {
   var navegar = useNavigate()
-  var oportunidades = [
-    {
-      categoria: 'INTERCÂMBIO',
-      tipo: 'Intercâmbio',
-      titulo: 'Programa de Mobilidade Acadêmica — 2027.1',
-      descricao: 'Experiência acadêmica internacional em universidade parceira.',
-      status: 'Inscrições abertas',
-      aberto: true,
-    },
-    {
-      categoria: 'BUDDY PROGRAM',
-      tipo: 'Buddy Program',
-      titulo: 'Buddy Program 2026.2 — Conectando estudantes estrangeiros na UNIFOR',
-      descricao: 'Participe da integração e acolhimento de estudantes internacionais.',
-      status: 'Inscrições abertas',
-      aberto: true,
-    },
-    {
-      categoria: 'DUPLA TITULAÇÃO',
-      tipo: 'Dupla titulação',
-      titulo: 'Dupla titulação internacional',
-      descricao: 'Instituição parceira: Universidade de Lisboa (ISCTE).',
-      status: 'Em breve',
-      aberto: false,
-    },
-    {
-      categoria: 'ESTÁGIO EUA',
-      tipo: 'Estágio EUA',
-      titulo: 'Orientação para estágio em universidades dos Estados Unidos',
-      descricao: 'Oportunidade de experiência acadêmica e profissional internacional.',
-      status: 'Inscrições abertas',
-      aberto: true,
-    },
-  ]
+  var [categoria, setCategoria] = useState('')
+  var [status, setStatus] = useState('')
+  var [oportunidades, setOportunidades] = useState([])
+  var [carregando, setCarregando] = useState(true)
+  var [erro, setErro] = useState('')
 
-  var filtros = [
-    'Todos',
-    'Intercâmbio',
-    'Dupla titulação',
-    'Buddy Program',
-    'Estágio EUA',
-    'TOP Espanha',
-  ]
-
-  var [filtroAtivo, setFiltroAtivo] = useState('Todos')
-
-  var oportunidadesFiltradas = oportunidades.filter(function (oportunidade) {
-    return filtroAtivo === 'Todos' || oportunidade.tipo === filtroAtivo
-  })
+  useEffect(function () {
+    var cancelado = false
+    setCarregando(true)
+    setErro('')
+    listarOportunidades({ categoria: categoria, status: status })
+      .then(function (lista) {
+        if (cancelado) return
+        // abertas primeiro, depois em breve e por último as encerradas (dentro de cada grupo, por data)
+        var ordem = { aberta: 0, em_breve: 1, encerrada: 2 }
+        lista.sort(function (a, b) {
+          return ordem[a.status] - ordem[b.status]
+        })
+        setOportunidades(lista)
+        setCarregando(false)
+      })
+      .catch(function (e) {
+        if (cancelado) return
+        setErro(e.message)
+        setCarregando(false)
+      })
+    return function () {
+      cancelado = true
+    }
+  }, [categoria, status])
 
   return (
     <>
@@ -70,63 +83,111 @@ function Oportunidades() {
           ←
         </button>
         <section className="cabecalho-oportunidades">
-          <h1>Oportunidades Abertas</h1>
+          <h1>Oportunidades e editais</h1>
           <p>
-            Confira oportunidades, editais e programas com inscrições em andamento.
+            Confira intercâmbios, programas de dupla titulação e programas
+            internacionais, com o período de inscrição de cada um.
           </p>
 
-          <div className="filtros-oportunidades">
-            {filtros.map(function (filtro) {
-              return (
-                <button
-                  type="button"
-                  key={filtro}
-                  className={
-                    filtroAtivo === filtro
-                      ? 'filtro-oportunidade ativo'
-                      : 'filtro-oportunidade'
-                  }
-                  onClick={function () {
-                    setFiltroAtivo(filtro)
-                  }}
-                >
-                  {filtro}
-                </button>
-              )
-            })}
+          <div className="grupo-filtros-oportunidades">
+            <span className="rotulo-filtro-oportunidades">Categoria</span>
+            <div className="filtros-oportunidades" role="group" aria-label="Filtrar por categoria">
+              {CATEGORIAS.map(function (item) {
+                return (
+                  <button
+                    type="button"
+                    key={item.valor}
+                    aria-pressed={categoria === item.valor}
+                    className={categoria === item.valor ? 'filtro-oportunidade ativo' : 'filtro-oportunidade'}
+                    onClick={function () {
+                      setCategoria(item.valor)
+                    }}
+                  >
+                    {item.nome}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+
+          <div className="grupo-filtros-oportunidades">
+            <span className="rotulo-filtro-oportunidades">Situação</span>
+            <div className="filtros-oportunidades" role="group" aria-label="Filtrar por situação">
+              {STATUS.map(function (item) {
+                return (
+                  <button
+                    type="button"
+                    key={item.valor}
+                    aria-pressed={status === item.valor}
+                    className={status === item.valor ? 'filtro-oportunidade ativo' : 'filtro-oportunidade'}
+                    onClick={function () {
+                      setStatus(item.valor)
+                    }}
+                  >
+                    {item.nome}
+                  </button>
+                )
+              })}
+            </div>
           </div>
         </section>
 
-        <section className="lista-oportunidades">
-          {oportunidadesFiltradas.length > 0 ? (
-            oportunidadesFiltradas.map(function (oportunidade) {
-              return (
-                <article className="card-oportunidade" key={oportunidade.categoria}>
-                  <div className="texto-oportunidade">
-                    <span className="categoria-oportunidade">
-                      {oportunidade.categoria}
-                    </span>
-                    <h2>{oportunidade.titulo}</h2>
-                    <p>{oportunidade.descricao}</p>
-                  </div>
+        <section className="lista-oportunidades" aria-live="polite">
+          {erro && <p className="sem-oportunidades" role="alert">{erro}</p>}
 
-                  <span
-                    className={
-                      oportunidade.aberto
-                        ? 'status-oportunidade aberto'
-                        : 'status-oportunidade em-breve'
-                    }
-                  >
-                    {oportunidade.status}
-                  </span>
-                </article>
-              )
-            })
-          ) : (
+          {carregando && !erro && <p className="sem-oportunidades">Carregando oportunidades...</p>}
+
+          {!carregando && !erro && oportunidades.length === 0 && (
             <p className="sem-oportunidades">
-              Nenhuma oportunidade encontrada nesta categoria.
+              Nenhuma oportunidade encontrada com esses filtros.
             </p>
           )}
+
+          {!carregando && !erro && oportunidades.length > 0 && (
+            <p className="contagem-oportunidades">
+              {oportunidades.length} {oportunidades.length === 1 ? 'oportunidade encontrada' : 'oportunidades encontradas'}
+            </p>
+          )}
+
+          {!carregando && !erro && oportunidades.map(function (oportunidade) {
+            return (
+              <article className="card-oportunidade" key={oportunidade.id_oportunidade}>
+                <div className="texto-oportunidade">
+                  <span className="categoria-oportunidade">
+                    {nomeCategoria(oportunidade.categoria).toUpperCase()}
+                  </span>
+                  <h2>{oportunidade.titulo}</h2>
+                  <p>{oportunidade.descricao}</p>
+
+                  {oportunidade.requisitos && (
+                    <p className="requisitos-oportunidade">
+                      <strong>Requisitos:</strong> {oportunidade.requisitos}
+                    </p>
+                  )}
+
+                  <div className="detalhes-oportunidade">
+                    <span>
+                      Inscrições: {formatarData(oportunidade.data_inicio)} a {formatarData(oportunidade.data_fim)}
+                    </span>
+                    {oportunidade.universidade && (
+                      <Link to={'/universidades/' + oportunidade.universidade.id_universidade}>
+                        {oportunidade.universidade.nome}
+                      </Link>
+                    )}
+                    {oportunidade.fonte_oficial && (
+                      <a href={oportunidade.fonte_oficial} target="_blank" rel="noopener noreferrer">
+                        Fonte oficial ↗
+                      </a>
+                    )}
+                  </div>
+                </div>
+
+                <span className={'status-oportunidade ' + CLASSE_STATUS[oportunidade.status]}>
+                  {NOME_STATUS[oportunidade.status]}
+                </span>
+              </article>
+            )
+          })}
         </section>
       </main>
 

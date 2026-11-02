@@ -93,13 +93,24 @@ export function listarFiltros() {
   return chamar('/filtros')
 }
 
-export function listarUniversidades(filtros) {
+// monta "?chave=valor&..." só com os filtros preenchidos
+function montarFiltros(filtros) {
   var parametros = new URLSearchParams()
   Object.keys(filtros || {}).forEach(function (chave) {
     if (filtros[chave]) parametros.set(chave, filtros[chave])
   })
   var texto = parametros.toString()
-  return chamar('/universidades' + (texto ? '?' + texto : ''))
+  return texto ? '?' + texto : ''
+}
+
+export function listarUniversidades(filtros) {
+  return chamar('/universidades' + montarFiltros(filtros))
+}
+
+/* ---------- oportunidades (público) ---------- */
+// filtros: { categoria, status, universidade, busca }
+export function listarOportunidades(filtros) {
+  return chamar('/oportunidades' + montarFiltros(filtros))
 }
 
 export function buscarUniversidade(id) {
