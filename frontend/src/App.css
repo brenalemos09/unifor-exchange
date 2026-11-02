@@ -1,0 +1,201 @@
+
+.topo {
+  height: 64px;
+  padding: 0 4%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #202020;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.marca-simbolo {
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  background-color: #004af7;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.menu a {
+  color: #333333;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.botao-entrar {
+  background-color: #004af7;
+  color: white;
+  text-decoration: none;
+  padding: 9px 25px;
+  border-radius: 25px;
+  font-size: 13px;
+}
+
+.hero {
+  background-color: #002da6;
+  color: white;
+  text-align: center;
+  padding: 48px 20px;
+}
+
+.bandeiras {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.bandeira {
+  display: inline-block;
+  width: 42px;
+  height: 27px;
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Brasil */
+.brasil {
+  background: #009b3a;
+  position: relative;
+}
+
+.brasil::before {
+  content: "";
+  position: absolute;
+  width: 19px;
+  height: 19px;
+  background: #ffdf00;
+  transform: translate(-50%, -50%) rotate(45deg);
+  top: 50%;
+  left: 50%;
+}
+
+.brasil::after {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  background: #002776;
+  border-radius: 50%;
+  top: 9px;
+  left: 16px;
+}
+
+/* França */
+.franca {
+  background: linear-gradient(
+    to right,
+    #002395 33.33%,
+    white 33.33%,
+    white 66.66%,
+    #ed2939 66.66%
+  );
+}
+
+/* Portugal */
+.portugal {
+  background: linear-gradient(
+    to right,
+    #006600 40%,
+    #ff0000 40%
+  );
+}
+
+/* Bélgica */
+.belgica {
+  background: linear-gradient(
+    to right,
+    #000000 33.33%,
+    #fae042 33.33%,
+    #fae042 66.66%,
+    #ed2939 66.66%
+  );
+}
+
+/* Irlanda */
+.irlanda {
+  background: linear-gradient(
+    to right,
+    #169b62 33.33%,
+    white 33.33%,
+    white 66.66%,
+    #ff883e 66.66%
+  );
+}
+
+.hero h1 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.hero p {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #dce5ff;
+}
+
+.hero-botoes {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.botao-destaque,
+.botao-secundario {
+  padding: 12px 24px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.botao-destaque {
+  background-color: #fba234;
+  color: white;
+}
+
+.botao-secundario {
+  border: 1px solid white;
+  color: white;
+}
+
+.indicadores {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  text-align: center;
+  padding: 30px 4%;
+  background-color: white;
+}
+
+.indicadores div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.indicadores strong {
+  color: #002da6;
+  font-size: 20px;
+}
+
+.indicadores span {
+  color: #777777;
+  font-size: 13px;
+}

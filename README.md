@@ -1,70 +1,73 @@
 # UNIFOR Exchange
 
-Plataforma web de apoio à mobilidade acadêmica internacional da Universidade de Fortaleza (UNIFOR), que centraliza e organiza informações sobre países, universidades conveniadas e oportunidades internacionais em uma experiência interativa e personalizada.
+Plataforma web de apoio à mobilidade acadêmica internacional da UNIFOR. Reúne países, universidades conveniadas e oportunidades em um só lugar. Tem caráter **informativo e orientativo** e não substitui os processos oficiais da DRI.
 
-## 📌 Sobre o projeto
+Disciplina: Desenvolvimento de Plataformas Web — UNIFOR.
 
-O UNIFOR Exchange reúne, em um único ambiente, informações sobre destinos, universidades parceiras, oportunidades internacionais e requisitos de mobilidade acadêmica, oferecendo recursos como mapa interativo, busca e filtros, e um quiz de perfil que recomenda destinos compatíveis com o estudante.
+## Estrutura do projeto
 
-A plataforma tem caráter **informativo e orientativo** — não substitui os processos oficiais da Diretoria de Relações Internacionais (DRI) da UNIFOR, como inscrições, aprovações ou equivalência de disciplinas.
+```
+unifor-exchange/
+├── frontend/   → site (React + Vite + Bootstrap)
+├── api/        → servidor (Node.js + Express + Prisma) que conversa com o banco MySQL
+└── README.md
+```
 
-O projeto está sendo desenvolvido na disciplina de Desenvolvimento de Plataformas Web (UNIFOR).
+## Como rodar
 
-## 💡 Funcionalidades principais
+Precisa do Node.js instalado. São **dois terminais**.
 
-- Cadastro, login e recuperação de acesso;
-- Mapa interativo de destinos, com universidades por país;
-- Catálogo de universidades, com busca e filtros (país, curso, idioma, modalidade);
-- Quiz de perfil, com recomendação personalizada e índice de compatibilidade;
-- Consulta de oportunidades internacionais (intercâmbio, dupla titulação, programas);
-- Favoritos e área pessoal;
-- Minha Jornada — checklist de preparação para o intercâmbio;
-- Requisitos gerais e verificação orientativa de elegibilidade;
-- Experiências de estudantes;
-- Área administrativa (CRUD de universidades, países e oportunidades).
+### 1) API (back-end)
 
-## 🛠️ Tecnologias
+```bash
+cd api
+npm install
+cp .env.example .env     # preencha o .env com os dados passados pelo Hafiz (LEIA-ME_BANCO)
+npx prisma generate
+npm run dev              # sobe em http://localhost:3000
+```
 
-- **Front-end:** React, HTML, JavaScript e Bootstrap
-- **Back-end:** Node.js e Express
-- **Banco de dados:** MySQL
+Teste rápido: abra http://localhost:3000/saude → deve aparecer `{"ok":true}`.
+Testes do banco: `npm run testar` (esperado: "0 FALHARAM").
 
-## 👥 Equipe
+> Depois de todo `git pull`: rode `npm install` e `npx prisma generate` dentro de `api/`.
 
-- Brena Vitória Aguiar Lemos
-- Catarina Thaís Lima Pimentel
-- Enzo Fernandes Paulino
-- Hafiz Oliveira Costa
-- Thaís Câncio Rodrigues de Góis
+### 2) Front-end
 
-## 🏫 Instituição
+```bash
+cd frontend
+npm install
+npm run dev              # abre em http://localhost:5173
+```
 
-**Universidade de Fortaleza — UNIFOR**
+O front usa a API em `http://localhost:3000`. Para mudar, copie `frontend/.env.example` para `frontend/.env`.
 
-Disciplina: Desenvolvimento de Plataformas Web
+## Login de teste
 
-## 🚧 Status
+Senha de todos os usuários de teste: `1234`. Administradores: matrículas `1911207` e `2111320`. Estudante: `2511483`.
+A área administrativa (`/admin`) só abre para administradores.
 
-**Etapa 1 — Plano de Trabalho:** concluída.
+## Regras do banco (importante)
 
-Foram definidos o escopo do sistema, requisitos funcionais e não funcionais, casos de uso, fluxo de navegação, wireframes e protótipo no Figma, modelagem de dados, tecnologias e arquitetura.
+- O banco é **compartilhado** pelo grupo. Não rode seed/DDL de novo e tenha cuidado com `DELETE`, `UPDATE`, `DROP` e `TRUNCATE`.
+- Nunca suba o arquivo `.env` para o GitHub.
 
-**Etapa 2 — MVP:** em desenvolvimento.
+## Status
 
-O MVP desta etapa contempla:
+- **Etapa 1 — Plano de Trabalho:** concluída.
+- **Etapa 2 — MVP:** em desenvolvimento. Catálogo, detalhes e área administrativa (CRUD de universidades) ligados à API e ao banco; login funcionando.
+- Ainda com dados de exemplo no próprio front (serão ligados à API na Etapa 3): mapa, país, quiz/resultado, oportunidades, Minha Jornada e favoritos.
 
-- Home;
-- Catálogo de universidades;
-- Detalhes da universidade;
-- Área administrativa de universidades;
-- CRUD de universidades;
-- Integração entre front-end, API e banco de dados;
-- Responsividade das interfaces.
+## Fluxo de Git
 
-Nesta etapa, o desenvolvimento utiliza React + Bootstrap no front-end, Node.js + Express no back-end e MySQL para persistência dos dados.
+- `main`: versão estável. Branches de trabalho: `feature/...`. Commits: `feat`, `fix`, `style`, `docs`, `refactor`.
+- Nada vai direto para a `main`: entra por Pull Request, revisado em grupo.
 
-## 🔗 Links
+## Equipe
 
-- **Repositório:** https://github.com/brenalemos09/unifor-exchange
-- **Trello:** https://trello.com/invite/b/6a97079f2a71436af601617a/ATTI88d87562c6b07786dc9cbd3cc9bcfbce1B77E1FD/unifor-exchange
-- **Figma (protótipo):** https://www.figma.com/design/hFSbuZDYrMKZYXx4D9NAeS/UNIFOR-Exchange-%E2%80%94-Prot%C3%B3tipo-Web?node-id=1-6
+Brena Vitória Aguiar Lemos · Catarina Thaís Lima Pimentel · Enzo Fernandes Paulino · Hafiz Oliveira Costa · Thaís Câncio Rodrigues de Góis
+
+## Links
+
+- Trello: https://trello.com/invite/b/6a97079f2a71436af601617a/ATTI88d87562c6b07786dc9cbd3cc9bcfbce1B77E1FD/unifor-exchange
+- Figma: https://www.figma.com/design/hFSbuZDYrMKZYXx4D9NAeS/UNIFOR-Exchange-%E2%80%94-Prot%C3%B3tipo-Web?node-id=1-6

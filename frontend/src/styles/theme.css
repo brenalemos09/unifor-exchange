@@ -1,0 +1,178 @@
+/*
+ * UNIFOR Exchange: base visual
+ * Tokens extraídos da página "Estilos" do protótipo no Figma.
+ * Importar DEPOIS do Bootstrap, no main.jsx:
+ *   import 'bootstrap/dist/css/bootstrap.min.css';
+ *   import './styles/theme.css';
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* ---------- Cores: marca ---------- */
+  --ux-azul: #004af7;
+  --ux-azul-escuro: #002da6;
+  --ux-azul-claro: #e8eefe;
+  --ux-laranja: #fba234;
+  --ux-laranja-claro: #ffefdb;
+
+  /* ---------- Cores: neutros ---------- */
+  --ux-branco: #ffffff;
+  --ux-fundo: #f5f7fa;
+  --ux-superficie: #ffffff;
+  --ux-borda: #e2e5ea;
+  --ux-texto-primario: #1a1d29;
+  --ux-texto-secundario: #5b6270;
+  --ux-texto-mudo: #8b92a0;
+
+  /* ---------- Cores: status ---------- */
+  --ux-sucesso: #16a34a;
+  --ux-atencao: #d97706;
+  --ux-neutro: #9ca3af;
+
+  /* ---------- Tipografia (Inter) ---------- */
+  --ux-fonte: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* ---------- Espaçamento (variáveis espaco/* do Figma) ---------- */
+  --ux-espaco-4: 4px;
+  --ux-espaco-8: 8px;
+  --ux-espaco-12: 12px;
+  --ux-espaco-16: 16px;
+  --ux-espaco-20: 20px;
+  --ux-espaco-24: 24px;
+  --ux-espaco-32: 32px;
+  --ux-espaco-48: 48px;
+  --ux-espaco-64: 64px;
+
+  /* ---------- Raios (variáveis raio/* do Figma) ---------- */
+  --ux-raio-sm: 6px;
+  --ux-raio-md: 10px;
+  --ux-raio-lg: 16px;
+  --ux-raio-xl: 24px;
+  --ux-raio-pill: 999px;
+
+  /* ---------- Sombras ---------- */
+  --ux-sombra: 0 1px 3px rgba(26, 29, 41, 0.08);
+  --ux-sombra-hover: 0 8px 24px rgba(26, 29, 41, 0.12);
+
+  /* ---------- Mapeamento para o Bootstrap 5.3 ---------- */
+  --bs-primary: var(--ux-azul);
+  --bs-primary-rgb: 0, 74, 247;
+  --bs-success: var(--ux-sucesso);
+  --bs-success-rgb: 22, 163, 74;
+  --bs-warning: var(--ux-atencao);
+  --bs-warning-rgb: 217, 119, 6;
+  --bs-secondary: var(--ux-neutro);
+  --bs-secondary-rgb: 156, 163, 175;
+
+  --bs-body-font-family: var(--ux-fonte);
+  --bs-body-font-size: 15px;
+  --bs-body-line-height: 1.4667; /* 22px */
+  --bs-body-color: var(--ux-texto-primario);
+  --bs-body-bg: var(--ux-fundo);
+  --bs-secondary-color: var(--ux-texto-secundario);
+  --bs-border-color: var(--ux-borda);
+  --bs-border-radius: var(--ux-raio-sm);
+  --bs-border-radius-lg: var(--ux-raio-lg);
+  --bs-link-color: var(--ux-azul);
+  --bs-link-color-rgb: 0, 74, 247;
+  --bs-link-hover-color: var(--ux-azul-escuro);
+  --bs-link-hover-color-rgb: 0, 45, 166;
+}
+
+body {
+  font-family: var(--ux-fonte);
+  background-color: var(--ux-fundo);
+  color: var(--ux-texto-primario);
+}
+
+/* ---------- Escala tipográfica do Figma ---------- */
+h1, .ux-h1 { font-size: 40px; line-height: 48px; font-weight: 700; }
+h2, .ux-h2 { font-size: 28px; line-height: 36px; font-weight: 700; }
+h3, .ux-h3 { font-size: 20px; line-height: 28px; font-weight: 600; }
+h1, h2, h3 { color: var(--ux-texto-primario); margin-bottom: var(--ux-espaco-16); }
+
+.ux-corpo-grande  { font-size: 18px; line-height: 28px; font-weight: 400; }
+.ux-corpo         { font-size: 15px; line-height: 22px; font-weight: 400; }
+.ux-corpo-pequeno { font-size: 13px; line-height: 18px; font-weight: 400; }
+.ux-legenda       { font-size: 12px; line-height: 16px; font-weight: 500; }
+
+.ux-texto-secundario { color: var(--ux-texto-secundario); }
+.ux-texto-mudo       { color: var(--ux-texto-mudo); }
+
+/* Títulos menores no celular */
+@media (max-width: 576px) {
+  h1, .ux-h1 { font-size: 32px; line-height: 40px; }
+  h2, .ux-h2 { font-size: 24px; line-height: 32px; }
+}
+
+/* ---------- Botões (Rótulo/Botão: Inter 600, 15/20) ---------- */
+.btn {
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 20px;
+  padding: 10px 20px;
+  border-radius: var(--ux-raio-sm);
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--ux-azul);
+  --bs-btn-border-color: var(--ux-azul);
+  --bs-btn-hover-bg: var(--ux-azul-escuro);
+  --bs-btn-hover-border-color: var(--ux-azul-escuro);
+  --bs-btn-active-bg: var(--ux-azul-escuro);
+  --bs-btn-active-border-color: var(--ux-azul-escuro);
+  --bs-btn-disabled-bg: var(--ux-azul);
+  --bs-btn-disabled-border-color: var(--ux-azul);
+}
+
+.btn-outline-primary {
+  --bs-btn-color: var(--ux-azul);
+  --bs-btn-border-color: var(--ux-azul);
+  --bs-btn-hover-bg: var(--ux-azul);
+  --bs-btn-hover-border-color: var(--ux-azul);
+  --bs-btn-active-bg: var(--ux-azul-escuro);
+}
+
+/* Botão de destaque (laranja), para chamadas como "Ver universidades" */
+.btn-destaque {
+  --bs-btn-color: var(--ux-texto-primario);
+  --bs-btn-bg: var(--ux-laranja);
+  --bs-btn-border-color: var(--ux-laranja);
+  --bs-btn-hover-color: var(--ux-texto-primario);
+  --bs-btn-hover-bg: #e8902a;
+  --bs-btn-hover-border-color: #e8902a;
+  --bs-btn-active-bg: #d9821f;
+}
+
+/* ---------- Etiquetas (país, idioma, status) ---------- */
+.ux-tag {
+  display: inline-block;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: var(--ux-raio-pill);
+  background: var(--ux-azul-claro);
+  color: var(--ux-azul-escuro);
+}
+.ux-tag--laranja { background: var(--ux-laranja-claro); color: #9a5a0a; }
+
+/* ---------- Superfícies ---------- */
+.ux-card {
+  background: var(--ux-superficie);
+  border: 1px solid var(--ux-borda);
+  border-radius: var(--ux-raio-lg);
+  box-shadow: var(--ux-sombra);
+}
+
+.ux-secao { padding-block: var(--ux-espaco-48); }
+@media (max-width: 576px) {
+  .ux-secao { padding-block: var(--ux-espaco-32); }
+}
+
+/* Foco visível para acessibilidade */
+:focus-visible {
+  outline: 2px solid var(--ux-azul);
+  outline-offset: 2px;
+}

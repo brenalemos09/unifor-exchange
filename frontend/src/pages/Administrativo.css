@@ -1,0 +1,321 @@
+
+.pagina-administrativo {
+  min-height: 100vh;
+  background-color: #f4f6fa;
+  font-family: var(--ux-fonte);
+}
+
+.topo-administrativo {
+  height: 54px;
+  background-color: #0036bd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 25px;
+  color: white;
+}
+
+.marca-administrativo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12px;
+}
+
+.simbolo-administrativo {
+  color: #fba234;
+  font-size: 17px;
+}
+
+.perfil-administrativo {
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  background-color: #4778d9;
+}
+
+.conteudo-administrativo {
+  display: flex;
+  min-height: calc(100vh - 54px);
+}
+
+.menu-administrativo {
+  width: 205px;
+  flex-shrink: 0;
+  background-color: #f1f4fa;
+  padding: 22px 10px;
+}
+
+.menu-administrativo nav {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.item-menu-admin {
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  text-align: left;
+  padding: 10px 12px;
+  border-radius: 5px;
+  color: #555;
+  font-family: var(--ux-fonte);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.item-menu-admin.ativo {
+  background-color: #e0e9ff;
+  color: #004af7;
+  font-weight: 600;
+}
+
+.area-administrativa {
+  flex: 1;
+  min-width: 0;
+  padding: 28px 30px;
+  background-color: white;
+}
+
+.cabecalho-admin {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 18px;
+}
+
+.cabecalho-admin h1 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #202020;
+  margin: 0;
+}
+
+.botao-nova-universidade {
+  background-color: var(--ux-azul);
+  border: none;
+  border-radius: 22px;
+  padding: 9px 17px;
+  color: white;
+  font-family: var(--ux-fonte);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.busca-admin {
+  height: 35px;
+  border: 1px solid #e5e7ed;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 11px;
+  margin-bottom: 17px;
+  color: #888;
+}
+
+.busca-admin input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-family: var(--ux-fonte);
+  font-size: 11px;
+  background: transparent;
+}
+
+.tabela-admin {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #e9eaf0;
+  border-radius: 7px;
+}
+
+.tabela-admin table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 620px;
+}
+
+.tabela-admin th {
+  background-color: #f7f8fb;
+  color: #555;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: left;
+  padding: 12px;
+}
+
+.tabela-admin td {
+  padding: 12px;
+  border-top: 1px solid #eeeeef;
+  color: #444;
+  font-size: 11px;
+}
+
+.status-admin {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.status-admin.ativo {
+  color: #159653;
+}
+
+.status-admin.inativo {
+  color: #d17b25;
+}
+
+.acoes-admin {
+  white-space: nowrap;
+}
+
+.acoes-admin button {
+  border: none;
+  background: transparent;
+  font-family: var(--ux-fonte);
+  font-size: 10px;
+  cursor: pointer;
+  margin-right: 8px;
+  color: #004af7;
+}
+
+.acoes-admin button:last-child {
+  color: #df4545;
+}
+
+.sem-universidades-admin {
+  padding: 20px;
+  text-align: center;
+  color: #777;
+  font-size: 12px;
+}
+
+.fundo-modal-admin {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.modal-admin {
+  width: 100%;
+  max-width: 430px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.modal-admin h2 {
+  color: #202020;
+  font-size: 17px;
+  margin-bottom: 20px;
+}
+
+.modal-admin label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 13px;
+  color: #444;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.modal-admin input,
+.modal-admin select {
+  width: 100%;
+  height: 37px;
+  border: 1px solid #dddfe6;
+  border-radius: 5px;
+  padding: 0 10px;
+  background-color: white;
+  font-family: var(--ux-fonte);
+  font-size: 12px;
+}
+
+.botoes-modal-admin {
+  display: flex;
+  justify-content: flex-end;
+  gap: 9px;
+  margin-top: 20px;
+}
+
+.botoes-modal-admin button {
+  padding: 9px 17px;
+  border-radius: 20px;
+  font-family: var(--ux-fonte);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.cancelar-admin {
+  border: 1px solid #ddd;
+  background-color: white;
+  color: #555;
+}
+
+.salvar-admin {
+  border: none;
+  background-color: var(--ux-azul);
+  color: white;
+}
+
+@media (max-width: 700px) {
+  .conteudo-administrativo {
+    flex-direction: column;
+  }
+
+  .menu-administrativo {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .menu-administrativo nav {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .item-menu-admin {
+    white-space: nowrap;
+    width: auto;
+  }
+
+  .area-administrativa {
+    padding: 22px 15px;
+  }
+
+  .cabecalho-admin {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+.botao-voltar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin: 20px 0 0 30px;
+  border: 1px solid #d5def7;
+  border-radius: 10px;
+  background-color: white;
+  color: var(--ux-azul-escuro);
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.botao-voltar:hover {
+  background-color: #e8eefe;
+  border-color: var(--ux-azul);
+  transform: translateX(-3px);
+}
