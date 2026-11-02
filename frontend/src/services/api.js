@@ -20,6 +20,20 @@ export function sair() {
   localStorage.removeItem(CHAVE_USUARIO)
 }
 
+export function estaLogado() {
+  return !!obterToken() && !!obterUsuario()
+}
+
+export function ehAdministrador() {
+  var usuario = obterUsuario()
+  return !!usuario && usuario.tipo === 'administrador'
+}
+
+function guardarSessao(dados) {
+  localStorage.setItem(CHAVE_TOKEN, dados.token)
+  localStorage.setItem(CHAVE_USUARIO, JSON.stringify(dados.usuario))
+}
+
 async function chamar(caminho, opcoes) {
   opcoes = opcoes || {}
   var cabecalhos = { 'Content-Type': 'application/json' }
@@ -42,16 +56,36 @@ async function chamar(caminho, opcoes) {
   var dados = await resposta.json().catch(function () {
     return {}
   })
-  if (!resposta.ok) throw new Error(dados.erro || 'Erro ao falar com a API.')
+  if (!resposta.ok) {
+    // token vencido ou inválido: limpa a sessão para a pessoa entrar de novo
+    if (resposta.status === 401 && token) sair()
+    throw new Error(dados.erro || 'Erro ao falar com a API.')
+  }
   return dados
 }
 
-/* ---------- login ---------- */
+/* ---------- login, cadastro e recuperação de senha ---------- */
 export async function entrar(login, senha) {
   var dados = await chamar('/auth/login', { metodo: 'POST', corpo: { login: login, senha: senha } })
-  localStorage.setItem(CHAVE_TOKEN, dados.token)
-  localStorage.setItem(CHAVE_USUARIO, JSON.stringify(dados.usuario))
+  guardarSessao(dados)
   return dados.usuario
+}
+
+export async function cadastrar(dados) {
+  var resposta = await chamar('/auth/cadastro', { metodo: 'POST', corpo: dados })
+  guardarSessao(resposta)
+  return resposta.usuario
+}
+
+export function pedirCodigoRecuperacao(login) {
+  return chamar('/auth/recuperar', { metodo: 'POST', corpo: { login: login } })
+}
+
+export function redefinirSenha(login, codigo, novaSenha) {
+  return chamar('/auth/redefinir', {
+    metodo: 'POST',
+    corpo: { login: login, codigo: Number(codigo), nova_senha: novaSenha },
+  })
 }
 
 /* ---------- catálogo (público) ---------- */

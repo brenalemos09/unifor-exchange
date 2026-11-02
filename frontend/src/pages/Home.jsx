@@ -1,26 +1,12 @@
 
 import { Link } from 'react-router-dom'
+import Header from '../components/Header'
 import './Home.css'
 
 function Home() {
   return (
     <div className="home-original">
-      <header className="home-header">
-        <Link to="/" className="home-logo">
-          <span className="home-logo-circle"></span>
-          <strong>UNIFOR Exchange</strong>
-        </Link>
-
-        <nav className="home-nav">
-          <Link to="/mapa">Mapa</Link>
-          <Link to="/universidades">Universidades</Link>
-          <Link to="/quiz">Quiz de Perfil</Link>
-          <Link to="/oportunidades">Oportunidades</Link>
-          <Link to="/minha-jornada">Minha Jornada</Link>
-        </nav>
-
-        <Link to="/login" className="home-login">Entrar</Link>
-      </header>
+      <Header />
 
       <main>
         <section className="home-banner">

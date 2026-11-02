@@ -184,3 +184,39 @@
     padding: 40px 25px;
   }
 }
+.aviso-login {
+  margin: 0 0 18px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--ux-azul-claro);
+  color: var(--ux-azul-escuro);
+  font-size: 13px;
+}
+
+.sucesso-login {
+  margin: 0 0 18px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #e7f6ec;
+  color: #11692f;
+  font-size: 13px;
+}
+
+a.marca-login {
+  color: white;
+  text-decoration: none;
+}
+
+.erro-login {
+  margin: 0 0 14px;
+  color: #b00020;
+  font-size: 13px;
+}
+
+.botao-link-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: white;
+}

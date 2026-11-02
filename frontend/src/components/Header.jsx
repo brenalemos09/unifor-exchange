@@ -1,9 +1,11 @@
-
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { obterUsuario, sair } from '../services/api'
 import './Header.css'
 
 function Header() {
   var localizacao = useLocation()
+  var navegar = useNavigate()
+  var usuario = obterUsuario()
 
   var links = [
     { nome: 'Mapa', caminho: '/mapa' },
@@ -12,6 +14,15 @@ function Header() {
     { nome: 'Oportunidades', caminho: '/oportunidades' },
     { nome: 'Minha Jornada', caminho: '/minha-jornada' },
   ]
+
+  if (usuario && usuario.tipo === 'administrador') {
+    links.push({ nome: 'Administração', caminho: '/admin' })
+  }
+
+  function clicarSair() {
+    sair()
+    navegar('/')
+  }
 
   return (
     <header className="home-header">
@@ -44,9 +55,20 @@ function Header() {
         })}
       </nav>
 
-      <Link to="/login" className="home-login">
-        Entrar
-      </Link>
+      {usuario ? (
+        <div className="usuario-header">
+          <span className="nome-usuario-header" title={usuario.email}>
+            Olá, {usuario.nome.split(' ')[0]}
+          </span>
+          <button type="button" className="botao-sair-header" onClick={clicarSair}>
+            Sair
+          </button>
+        </div>
+      ) : (
+        <Link to="/login" className="home-login">
+          Entrar
+        </Link>
+      )}
     </header>
   )
 }
