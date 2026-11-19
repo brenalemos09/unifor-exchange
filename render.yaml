@@ -1,4 +1,4 @@
-# Publicação da API no Render (Blueprint).
+# Publicação no Render (Blueprint): API + site.
 # No painel do Render: New > Blueprint > escolher este repositório.
 # Os valores marcados com sync: false são preenchidos no painel (nunca no GitHub).
 services:
@@ -29,3 +29,19 @@ services:
         sync: false
       - key: RECUPERACAO_DEMO
         value: "false"
+
+  # Site (front-end) como site estático
+  - type: web
+    name: unifor-exchange
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      # endereço da API publicada, lido no build
+      - key: VITE_API_URL
+        sync: false
