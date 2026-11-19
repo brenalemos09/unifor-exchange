@@ -4,6 +4,17 @@ Plataforma web de apoio à mobilidade acadêmica internacional da UNIFOR. Reúne
 
 Disciplina: Desenvolvimento de Plataformas Web — UNIFOR.
 
+## Acesse o sistema publicado
+
+| O quê | Endereço |
+|---|---|
+| Site (Vercel) | https://unifor-exchange.vercel.app |
+| Tutorial "Como usar" | https://unifor-exchange.vercel.app/como-usar |
+| API (Render) | https://unifor-exchange-api-puw9.onrender.com (teste: `/saude`) |
+| Site reserva (Render) | https://unifor-exchange-puw9.onrender.com |
+
+> A API está no plano gratuito do Render e "dorme" após ~15 min sem uso. O primeiro acesso depois disso pode levar até 1 minuto.
+
 ## Estrutura do projeto
 
 ```
@@ -107,6 +118,10 @@ O tutorial para estudantes fica em `/como-usar` (link no rodapé e na página in
   - Experiências de estudantes, requisitos, contatos e verificação de elegibilidade.
   - Área administrativa com cadastro, edição e exclusão de universidades, países, oportunidades e conteúdo institucional.
   - Telas conferidas no celular (375px), tablet e computador; CORS restrito ao endereço do site.
+- **Publicação e tutorial (nov/2026):** concluída.
+  - Site publicado na Vercel (pasta `frontend/`) e API publicada no Render (pasta `api/`, configurada pelo `render.yaml`), ligadas ao banco no Aiven.
+  - Nova tela **Como usar** (`/como-usar`): passo a passo para o estudante e dúvidas frequentes, com link no rodapé e na página inicial.
+  - Atualizações automáticas: novos commits na `main` publicam o site e a API sozinhos.
 
 ## Fluxo de Git
 
@@ -119,5 +134,8 @@ Brena Vitória Aguiar Lemos · Catarina Thaís Lima Pimentel · Enzo Fernandes P
 
 ## Links
 
+- Site publicado: https://unifor-exchange.vercel.app
+- Tutorial para estudantes: https://unifor-exchange.vercel.app/como-usar
+- API publicada: https://unifor-exchange-api-puw9.onrender.com
 - Trello: https://trello.com/invite/b/6a97079f2a71436af601617a/ATTI88d87562c6b07786dc9cbd3cc9bcfbce1B77E1FD/unifor-exchange
 - Figma: https://www.figma.com/design/hFSbuZDYrMKZYXx4D9NAeS/UNIFOR-Exchange-%E2%80%94-Prot%C3%B3tipo-Web?node-id=1-6
