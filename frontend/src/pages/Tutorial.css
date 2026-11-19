@@ -1,0 +1,36 @@
+/* Tela "Como usar": complementa o Conteudo.css */
+
+.passo-tutorial p + p {
+  margin-top: 8px;
+}
+
+.dica-tutorial {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: var(--ux-azul-claro);
+  color: #24346b !important;
+}
+
+.link-tutorial {
+  display: inline-block;
+  margin-top: 10px;
+  color: var(--ux-azul);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.link-tutorial:hover {
+  text-decoration: underline;
+}
+
+.pergunta-tutorial summary {
+  color: #202020;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pergunta-tutorial p {
+  margin-top: 8px !important;
+}

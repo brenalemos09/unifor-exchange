@@ -86,6 +86,10 @@ function Home() {
               Fazer o quiz de perfil
             </Link>
           </div>
+
+          <p className="home-tutorial">
+            Primeira vez por aqui? <Link to="/como-usar">Veja como usar a plataforma</Link>
+          </p>
         </section>
 
         <section className="home-stats">

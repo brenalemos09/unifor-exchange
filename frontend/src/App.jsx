@@ -18,6 +18,7 @@ import Requisitos from './pages/Requisitos'
 import Contatos from './pages/Contatos'
 import Elegibilidade from './pages/Elegibilidade'
 import Relatos from './pages/Relatos'
+import Tutorial from './pages/Tutorial'
 import RotaProtegida from './components/RotaProtegida'
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
         <Route path="/contatos" element={<Contatos />} />
         <Route path="/elegibilidade" element={<Elegibilidade />} />
         <Route path="/relatos" element={<Relatos />} />
+        <Route path="/como-usar" element={<Tutorial />} />
         <Route path="/quiz" element={<Quiz />} />
         <Route path="/resultado-quiz" element={<RotaProtegida><ResultadoQuiz /></RotaProtegida>} />
         <Route path="/oportunidades" element={<Oportunidades />} />

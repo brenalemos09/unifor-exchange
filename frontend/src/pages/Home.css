@@ -231,3 +231,14 @@
 .home-original > main {
   flex: 1;
 }
+
+.home-tutorial {
+  margin-top: 28px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.home-tutorial a {
+  color: white;
+  font-weight: 600;
+}
