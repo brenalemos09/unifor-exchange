@@ -11,6 +11,7 @@ function Rodape() {
       </p>
 
       <nav aria-label="Links do rodapé">
+        <Link to="/como-usar">Como usar</Link>
         <Link to="/requisitos">Requisitos</Link>
         <Link to="/elegibilidade">Elegibilidade</Link>
         <Link to="/contatos">Contato e Suporte</Link>

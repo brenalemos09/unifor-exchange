@@ -1,0 +1,31 @@
+# Publicação da API no Render (Blueprint).
+# No painel do Render: New > Blueprint > escolher este repositório.
+# Os valores marcados com sync: false são preenchidos no painel (nunca no GitHub).
+services:
+  - type: web
+    name: unifor-exchange-api
+    runtime: node
+    rootDir: api
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /saude
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_HOST
+        sync: false
+      - key: DATABASE_PORT
+        sync: false
+      - key: DATABASE_USER
+        sync: false
+      - key: DATABASE_PASSWORD
+        sync: false
+      - key: DATABASE_NAME
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CORS_ORIGEM
+        sync: false
+      - key: RECUPERACAO_DEMO
+        value: "false"
